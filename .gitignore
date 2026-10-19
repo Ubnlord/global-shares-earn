@@ -1,0 +1,23 @@
+node_modules
+dist
+.output
+.nitro
+.vercel
+.grok
+artifacts
+*.log
+
+# Local environment files — never commit secrets.
+.env
+.env.*
+!.env.example
+
+# Local credentials, certificates and key material.
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+credentials*.json
+service-account*.json
+secrets*.json
