@@ -556,7 +556,7 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
         .single();
       assert.ifError(before.error);
       const adminClient = await clientFor(users.admin);
-      const reference = `security-bdx-adjustment-${suffix}`;
+      const reference = randomUUID();
       const result = await adminClient.rpc("admin_adjust_bdx_balance", {
         p_user_id: users.normal.id,
         p_delta: 25,
