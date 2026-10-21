@@ -1,0 +1,226 @@
+name: Deploy Global Beldex to GitHub Pages
+
+# Production Pages deployment: every main-branch push rebuilds and publishes the current app.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Validate public frontend configuration
+        env:
+          VITE_SUPABASE_URL: https://jarzpkwdstahbzvbevrq.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "${VITE_SUPABASE_URL}" || { echo "ERROR: VITE_SUPABASE_URL is empty"; exit 1; }
+          test -n "${VITE_SUPABASE_PUBLISHABLE_KEY}" || { echo "ERROR: VITE_SUPABASE_PUBLISHABLE_KEY secret is missing or empty"; exit 1; }
+          echo "Supabase URL configured: ${VITE_SUPABASE_URL}"
+          echo "Supabase publishable key configured: yes"
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: https://jarzpkwdstahbzvbevrq.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+
+      - name: Prepare GitHub Pages static site
+        run: |
+          set -euo pipefail
+
+          if [ -d "./dist/client" ]; then
+            OUTPUT_DIR="./dist/client"
+          elif [ -d "./.output/public" ]; then
+            OUTPUT_DIR="./.output/public"
+          else
+            echo "ERROR: Could not find the static build output."
+            find . -path "./node_modules" -prune -o -type f -name "index.html" -print
+            exit 1
+          fi
+
+          echo "Using static output: $OUTPUT_DIR"
+          rm -rf ./pages-site
+          mkdir -p ./pages-site
+          cp -R "$OUTPUT_DIR"/. ./pages-site/
+
+          # Preserve the custom domain in the published artifact.
+          if [ -f "./CNAME" ]; then
+            cp ./CNAME ./pages-site/CNAME
+          fi
+
+          # TanStack Start SPA mode may emit its shell as _shell.html.
+          # GitHub Pages requires a root index.html.
+          if [ ! -f "./pages-site/index.html" ] && [ -f "./pages-site/_shell.html" ]; then
+            cp ./pages-site/_shell.html ./pages-site/index.html
+          fi
+
+          if [ ! -f "./pages-site/index.html" ]; then
+            # Some TanStack Start builds can emit only hashed client assets.
+            # Build a minimal SPA shell from the generated Vite entry instead
+            # of failing the deployment when no HTML shell was emitted.
+            ENTRY="$(find ./pages-site/assets -maxdepth 1 -type f -name 'index-*.js' | sort | head -1 || true)"
+            CSS="$(find ./pages-site/assets -maxdepth 1 -type f -name '*.css' | sort | head -1 || true)"
+            if [ -z "$ENTRY" ]; then
+              echo "ERROR: No root index.html/_shell.html and no Vite index entry was generated."
+              find "$OUTPUT_DIR" -maxdepth 3 -type f -print | sort | head -150
+              exit 1
+            fi
+            ENTRY_PATH="/${ENTRY#./pages-site/}"
+            CSS_PATH=""
+            if [ -n "$CSS" ]; then
+              CSS_PATH="/${CSS#./pages-site/}"
+            fi
+            python3 - "$ENTRY_PATH" "$CSS_PATH" <<'PY'
+          from pathlib import Path
+          import html
+          import sys
+
+          entry = html.escape(sys.argv[1], quote=True)
+          css = html.escape(sys.argv[2], quote=True)
+          css_tag = f'<link rel="stylesheet" href="{css}">' if css else ""
+          shell = f"""<!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <title>Global Beldex</title>
+              {css_tag}
+            </head>
+            <body>
+              <div id="root"></div>
+              <script type="module" src="{entry}"></script>
+            </body>
+          </html>
+          """
+          Path("./pages-site/index.html").write_text(shell, encoding="utf-8")
+          PY
+          fi
+
+          # Fail deployment if the generated shell cannot start the client.
+          test -s "./pages-site/index.html" || { echo "ERROR: root index.html is empty"; exit 1; }
+          grep -q "<script" "./pages-site/index.html" || { echo "ERROR: root index.html has no client script"; exit 1; }
+          if ! grep -R -q "jarzpkwdstahbzvbevrq" ./pages-site/assets 2>/dev/null; then
+            echo "ERROR: Supabase project URL was not embedded into the client bundle."
+            exit 1
+          fi
+          echo "Static shell and Supabase client bundle checks passed."
+
+          # GitHub Pages is a static host. TanStack Router still handles
+          # navigation in the browser, so every client-side route must receive
+          # the SPA shell when opened directly or refreshed.
+          #
+          # Creating route/index.html files gives direct URLs a normal 200
+          # response instead of relying only on the 404 fallback. This is
+          # especially important for /admin/login on mobile browsers.
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+
+          site = Path("./pages-site")
+          shell = site / "index.html"
+
+          routes = [
+              "/admin",
+              "/admin/login",
+              "/admin/transactions",
+              "/admin/deposits",
+              "/admin/withdrawals",
+              "/login",
+              "/register",
+              "/forgot",
+              "/legal",
+              "/app",
+              "/app/deposit",
+              "/app/history",
+              "/app/markets",
+              "/app/notifications",
+              "/app/plans",
+              "/app/profile",
+              "/app/referrals",
+              "/app/settings",
+              "/app/support",
+              "/app/swap",
+              "/app/withdraw",
+              "/auth/confirm",
+          ]
+
+          for route in routes:
+              target = site / route.lstrip("/") / "index.html"
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(shell, target)
+
+          # Keep a final SPA fallback for any other client-side route.
+          shutil.copy2(shell, site / "404.html")
+
+          # Preserve the referral redirect on the 404 fallback only.
+          fallback = site / "404.html"
+          html = fallback.read_text(encoding="utf-8")
+          marker = "</head>"
+          script = """<script>
+          (function () {
+            var match = window.location.pathname.match(/^\\/ref\\/([^/]+)\\/?$/i);
+            if (match) {
+              window.location.replace("/register?ref=" + encodeURIComponent(match[1]));
+            }
+          })();
+          </script>"""
+          if marker not in html:
+              raise SystemExit("ERROR: index.html has no </head> marker; cannot create 404 referral handler.")
+          fallback.write_text(html.replace(marker, script + marker, 1), encoding="utf-8")
+
+          print("Prepared direct SPA entry points:")
+          for route in routes:
+              print(f"  {route}/index.html")
+          print("  404.html")
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./pages-site
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
