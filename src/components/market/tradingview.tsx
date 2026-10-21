@@ -14,7 +14,6 @@ const CONFIG: Record<
     height: 46,
     payload: {
       symbols: [
-        { proName: "CRYPTO:BDXUSD", title: "Beldex" },
         { proName: "BINANCE:BTCUSDT", title: "Bitcoin" },
         { proName: "BINANCE:ETHUSDT", title: "Ethereum" },
         { proName: "BINANCE:SOLUSDT", title: "Solana" },
@@ -32,7 +31,7 @@ const CONFIG: Record<
     height: 280,
     payload: {
       autosize: true,
-      symbol: "CRYPTO:BDXUSD",
+      symbol: "BINANCE:BTCUSDT",
       interval: "60",
       timezone: "Etc/UTC",
       theme: "dark",
@@ -63,7 +62,7 @@ const CONFIG: Record<
     src: "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js",
     height: 360,
     payload: {
-      symbols: [["Beldex", "CRYPTO:BDXUSD|1D"]],
+      symbols: [["Bitcoin", "BINANCE:BTCUSDT|1D"], ["Ethereum", "BINANCE:ETHUSDT|1D"], ["Solana", "BINANCE:SOLUSDT|1D"], ["XRP", "BINANCE:XRPUSDT|1D"]],
       chartOnly: false,
       width: "100%",
       height: "100%",
@@ -98,7 +97,7 @@ function Fallback({ kind }: { kind: WidgetKind }) {
   if (kind === "tape") {
     return (
       <div className="flex h-full min-h-[46px] items-center gap-6 overflow-hidden px-4 text-xs text-muted">
-        {["BDXUSD", "BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT"].map((s) => (
+        {["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "BNBUSDT"].map((s) => (
           <span key={s} className="shrink-0">
             <span className="text-fg font-medium">{s}</span>
             <span className="ml-2 text-accent">{p.liveWord}</span>
@@ -109,15 +108,15 @@ function Fallback({ kind }: { kind: WidgetKind }) {
   }
   return (
     <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-2 px-4 text-center">
-      <div className="text-sm font-semibold text-fg">{p.liveBdx}</div>
+      <div className="text-sm font-semibold text-fg">"Live crypto market"</div>
       <p className="text-xs text-subtle max-w-xs">{p.chartFallback}</p>
       <a
-        href="https://www.tradingview.com/symbols/BDXUSD/"
+        href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
         target="_blank"
         rel="noopener noreferrer"
         className="text-xs text-accent hover:underline"
       >
-        {p.trackOnTv}
+        "Explore live crypto prices"
       </a>
     </div>
   );
