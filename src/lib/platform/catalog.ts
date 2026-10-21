@@ -302,8 +302,6 @@ export const COUNTRIES = [
 ];
 
 export const DEPOSIT_METHODS = {
-  CRYPTO: {
-  },
   BTC: {
     id: "BTC" as const,
     title: "Bitcoin",
