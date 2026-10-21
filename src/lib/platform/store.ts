@@ -288,6 +288,7 @@ export const usePlatform = create<PlatformState>()(
         },
 
         buyPlan: async (plan, amount) => {
+          if (!plan.available) return "PLAN_UNAVAILABLE_RETURN_TERMS_UNVERIFIED";
           if (amount < plan.min) return "MIN_PLAN|" + plan.name + "|" + plan.min.toLocaleString();
           const cap = planCeiling(plan);
           if (cap != null && amount > cap) return "MAX_PLAN|" + plan.name + "|" + cap.toLocaleString();
