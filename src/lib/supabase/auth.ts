@@ -13,7 +13,10 @@ export type CloudProfile = {
 
 function redirectTo(path: string) {
   if (typeof window === "undefined") return undefined;
-  return `${window.location.origin}${path}`;
+  // Respect Vite's deployment base so email links return to the published
+  // GitHub Pages app instead of localhost or the domain root.
+  const base = import.meta.env.BASE_URL.replace(/\\/$/, "");
+  return `${window.location.origin}${base}${path}`;
 }
 
 export function profileFromUser(user: User | null | undefined): CloudProfile | null {
