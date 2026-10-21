@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(18);
+select plan(22);
 
 -- Schema denomination defaults preserve existing records as USD.
 select has_column('public','user_profile','locked_bdx_balance','legacy balance column is retained for history');
@@ -9,6 +9,26 @@ select has_column('public','user_investment','currency','investment currency is 
 select has_column('public','transaction','currency','ledger currency is recorded');
 select col_default_is('public','user_investment','currency', 'USD', 'new investments default to USD');
 select col_default_is('public','transaction','currency', 'USD', 'new transactions default to USD');
+
+
+-- USD-only cutover guard is installed on both ledger tables. Historical BDX
+-- records remain identifiable; new BDX writes and denomination rewrites fail closed.
+select ok(exists (
+  select 1 from pg_trigger
+  where tgrelid = 'public.transaction'::regclass
+    and tgname = 'reject_new_bdx_transaction'
+    and not tgisinternal
+), 'transaction ledger has the legacy BDX write guard');
+select ok(exists (
+  select 1 from pg_trigger
+  where tgrelid = 'public.user_investment'::regclass
+    and tgname = 'reject_new_bdx_investment'
+    and not tgisinternal
+), 'investment ledger has the legacy BDX write guard');
+select ok(pg_get_functiondef('public.reject_new_bdx_accounting_writes()'::regprocedure) like
+  '%New BDX-denominated accounting is disabled%', 'new BDX accounting writes are rejected');
+select ok(pg_get_functiondef('public.reject_new_bdx_accounting_writes()'::regprocedure) like
+  '%Historical currency cannot be rewritten%', 'historical ledger currency cannot be rewritten');
 
 -- Daily simple-interest contract for all seven published plans.
 select is((4000::numeric * 0.019), 76::numeric, 'GNS 4,000 USD earns 76 USD per day');
