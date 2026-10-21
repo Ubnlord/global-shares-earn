@@ -141,10 +141,6 @@ function Landing() {
         <div className="text-center">
           <div className="text-xs font-semibold tracking-widest text-accent">CUSTOMER STORIES</div>
           <h2 id="testimonials-heading" className="mt-2 text-[28px] font-bold">What Our Clients Say</h2>
-          <p className="mx-auto mt-3 max-w-[680px] text-sm leading-6 text-muted">
-            Read feedback shared for publication by clients of Global Shares Earn. Testimonials
-            reflect individual experiences and are not a guarantee of future results.
-          </p>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {[
@@ -195,11 +191,6 @@ function Landing() {
         <div className="text-center">
           <div className="text-xs font-semibold tracking-widest text-accent">RECOGNITION</div>
           <h2 id="awards-heading" className="mt-2 text-[28px] font-bold">Awards &amp; Recognition</h2>
-          <p className="mx-auto mt-3 max-w-[680px] text-sm leading-6 text-muted">
-            Browse the recognition materials available in our media library. Award names, issuers,
-            dates, and any claim of an award being granted to GLOBAL SHARES EARN must be verified
-            before being represented as an official achievement.
-          </p>
         </div>
         <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[
