@@ -140,7 +140,7 @@ function Register() {
             <Input
               value={form.username}
               onChange={(e) => set("username", e.target.value)}
-              placeholder="johnbeldex"
+              placeholder="kenneth"
             />
           </div>
           <div>
