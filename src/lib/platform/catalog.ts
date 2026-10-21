@@ -15,7 +15,7 @@ export const PLANS: Plan[] = [
     id: "gns",
     name: "GNS PLAN",
     min: 4000,
-    max: "10,000 BDX",
+    max: "10,000 USD",
     profit: "1.90% Daily ROI",
     duration: "1 Month",
     durationDays: 30,
@@ -26,7 +26,7 @@ export const PLANS: Plan[] = [
     id: "build",
     name: "BUILD UP PLAN",
     min: 11000,
-    max: "16,000 BDX",
+    max: "16,000 USD",
     profit: "2.51% Daily ROI",
     duration: "2 Months",
     durationDays: 60,
@@ -37,7 +37,7 @@ export const PLANS: Plan[] = [
     id: "follow",
     name: "FOLLOW UP PLAN",
     min: 17000,
-    max: "30,000 BDX",
+    max: "30,000 USD",
     profit: "3.92% Daily ROI",
     duration: "2 Months",
     durationDays: 60,
@@ -48,7 +48,7 @@ export const PLANS: Plan[] = [
     id: "apex",
     name: "APEX PLAN",
     min: 40000,
-    max: "80,000 BDX",
+    max: "80,000 USD",
     profit: "8.56% Daily ROI",
     duration: "1 Year",
     durationDays: 365,
@@ -59,7 +59,7 @@ export const PLANS: Plan[] = [
     id: "edifex",
     name: "EDIFEX PLAN",
     min: 90000,
-    max: "150,000 BDX",
+    max: "150,000 USD",
     profit: "13.43% Daily ROI",
     duration: "2 Years",
     durationDays: 730,
@@ -70,7 +70,7 @@ export const PLANS: Plan[] = [
     id: "dixon",
     name: "DIXON PLAN",
     min: 160000,
-    max: "220,000 BDX",
+    max: "220,000 USD",
     profit: "15.43% Daily ROI",
     duration: "2 Years",
     durationDays: 730,
@@ -81,7 +81,7 @@ export const PLANS: Plan[] = [
     id: "falcon",
     name: "FALCON PLAN",
     min: 220000,
-    max: "1,000,000 BDX",
+    max: "1,000,000 USD",
     profit: "23.78% Daily ROI",
     duration: "5 Years",
     durationDays: 1825,
@@ -302,12 +302,7 @@ export const COUNTRIES = [
 ];
 
 export const DEPOSIT_METHODS = {
-  BELDEX: {
-    id: "BELDEX" as const,
-    title: "BELDEX",
-    address:
-      "bxdRzpW3nTXY3w76CQHHbMCg8TE9rrNdT1maW2PJYmuqS6YLCf16hDaZFcZ226m3SoLaFoSwEgsTA8ET85EdqFfj2nThkg4y3",
-    qr: "/deposits/beldex.jpg",
+  CRYPTO: {
   },
   BTC: {
     id: "BTC" as const,
@@ -323,23 +318,24 @@ export const DEPOSIT_METHODS = {
   },
 };
 
-export const DEPOSIT_ADDRESS = DEPOSIT_METHODS.BELDEX.address;
+export const DEPOSIT_ADDRESS = DEPOSIT_METHODS.BTC.address;
 
 export const TRENDING = [
-  { name: "Beldex", sym: "BDXUSD", icon: "B", live: true },
+  { name: "Bitcoin", sym: "BTC/USD", icon: "₿", live: true },
   { name: "Bitcoin", sym: "BTC", icon: "₿", live: false },
   { name: "Ethereum", sym: "ETH", icon: "Ξ", live: false },
   { name: "Solana", sym: "SOL", icon: "◎", live: false },
 ] as const;
 
 export const WITHDRAW_METHODS = [
-  { id: "BELDEX", label: "Beldex" },
+  { id: "BTC", label: "Bitcoin" },
+  { id: "ETH", label: "Ethereum" },
 ] as const;
 
 export const FAQ = [
   {
     q: "Is this a live brokerage?",
-    a: "Yes. GLOBAL BELDEX is with live Beldex charts from TradingView.",
+    a: "Yes. GLOBAL CRYPTO is with live Cryptocurrency charts from TradingView.",
   },
   {
     q: "What is the minimum deposit?",
@@ -351,7 +347,7 @@ export const FAQ = [
   },
   {
     q: "Where does market data come from?",
-    a: "Ticker, overview and candlestick widgets are official TradingView embeds for CRYPTO:BDXUSD and major pairs.",
+    a: "Ticker, overview and candlestick widgets show major cryptocurrency pairs in USD.",
   },
   {
     q: "Can I refer friends?",
