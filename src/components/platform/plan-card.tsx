@@ -31,8 +31,8 @@ export function PlanCard({
         <Line text={`${t.expectedProfit}: ${plan.profit}`} />
         <Line text={`${t.duration}: ${plan.duration}`} />
       </div>
-      <Button className="mt-4 w-full" onClick={() => onAction(plan)}>
-        {cta}
+      <Button className="mt-4 w-full" disabled={!plan.available} onClick={() => onAction(plan)}>
+        {plan.available ? cta : "Unavailable — return terms under review"}
       </Button>
     </div>
   );
