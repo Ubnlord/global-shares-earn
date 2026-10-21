@@ -93,7 +93,7 @@ function DepositPage() {
           <div className="mt-1 text-sm font-semibold">{selected.title}</div>
           <p className="mt-2 text-xs leading-5 text-subtle">Your account request is denominated in USD. Confirm the current crypto equivalent and network before sending funds; the transfer is reviewed before crediting.</p>
           <div className="mt-4 break-all rounded-lg border border-line bg-surface p-3 text-sm">{selected.address}</div>
-          <Button variant="outline" className="mt-3 w-full" onClick={copyAddress}>{t.addressCopied === "Address copied" ? "Copy deposit address" : t.depositAddress}</Button>
+          <Button variant="secondary" className="mt-3 w-full" onClick={copyAddress}>{t.addressCopied === "Address copied" ? "Copy deposit address" : t.depositAddress}</Button>
           <Button className="mt-3 w-full" onClick={confirm}>{t.sentIt}</Button>
           <Button variant="ghost" className="mt-2 w-full" onClick={() => setStep("form")}>{t.back}</Button>
         </section>
