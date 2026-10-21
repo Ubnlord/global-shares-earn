@@ -27,11 +27,11 @@ test("rejects a cloud refresh when the profile query fails", () => {
   assert.equal(isCompleteCloudRefresh({ data: null, error: new Error("profile query failed") }, transactions, investments), false);
 });
 
-test("rejects a cloud refresh when a required balance field is missing or invalid", () => {
+test("rejects a cloud refresh when a required USD balance field is missing or invalid", () => {
   for (const value of [
     { ...profile.data, available_balance: undefined },
     { ...profile.data, locked_balance: null },
-    { ...profile.data, bdx_balance: "not-a-number" },
+    { ...profile.data, total_withdrawals: "not-a-number" },
   ]) {
     assert.equal(isCompleteCloudRefresh({ data: value, error: null }, transactions, investments), false);
   }
