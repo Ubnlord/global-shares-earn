@@ -4,14 +4,14 @@ import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "GLOBAL BELDEX";
+const APP_NAME = "GLOBAL SHARES EARN";
 
 function DynamicImportRecovery() {
   useEffect(() => {
     const recover = () => {
       if (typeof window === "undefined") return;
 
-      const key = "__global_beldex_chunk_recovery";
+      const key = "__global_shares_earn_chunk_recovery";
       const now = Date.now();
       let lastRecovery = 0;
 
@@ -32,7 +32,7 @@ function DynamicImportRecovery() {
       }
 
       const url = new URL(window.location.href);
-      url.searchParams.set("__gb_reload", String(now));
+      url.searchParams.set("__gse_reload", String(now));
       window.location.replace(url.toString());
     };
 
@@ -89,7 +89,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "GLOBAL BELDEX advanced investment platform with live BDXUSD market data from TradingView.",
+          "GLOBAL SHARES EARN investment platform with USD-denominated account accounting and transparent risk information.",
       },
       { name: "theme-color", content: "#0A0A18" },
     ],
