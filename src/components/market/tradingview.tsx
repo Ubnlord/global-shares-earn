@@ -14,10 +14,10 @@ const CONFIG: Record<
     height: 46,
     payload: {
       symbols: [
-        { proName: "BINANCE:BTCUSDT", title: "Bitcoin" },
-        { proName: "BINANCE:ETHUSDT", title: "Ethereum" },
-        { proName: "BINANCE:SOLUSDT", title: "Solana" },
-        { proName: "BINANCE:XRPUSDT", title: "Ripple" },
+        { proName: "COINBASE:BTCUSD", title: "Bitcoin" },
+        { proName: "COINBASE:ETHUSD", title: "Ethereum" },
+        { proName: "COINBASE:SOLUSD", title: "Solana" },
+        { proName: "COINBASE:XRPUSD", title: "Ripple" },
       ],
       showSymbolLogo: true,
       colorTheme: "dark",
@@ -31,7 +31,7 @@ const CONFIG: Record<
     height: 280,
     payload: {
       autosize: true,
-      symbol: "BINANCE:BTCUSDT",
+      symbol: "COINBASE:BTCUSD",
       interval: "60",
       timezone: "Etc/UTC",
       theme: "dark",
@@ -47,7 +47,7 @@ const CONFIG: Record<
     height: 400,
     payload: {
       autosize: true,
-      symbol: "BINANCE:BTCUSDT",
+      symbol: "COINBASE:BTCUSD",
       interval: "D",
       timezone: "Etc/UTC",
       theme: "dark",
@@ -62,7 +62,7 @@ const CONFIG: Record<
     src: "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js",
     height: 360,
     payload: {
-      symbols: [["Bitcoin", "BINANCE:BTCUSDT|1D"], ["Ethereum", "BINANCE:ETHUSDT|1D"], ["Solana", "BINANCE:SOLUSDT|1D"], ["XRP", "BINANCE:XRPUSDT|1D"]],
+      symbols: [["Bitcoin", "COINBASE:BTCUSD|1D"], ["Ethereum", "COINBASE:ETHUSD|1D"], ["Solana", "COINBASE:SOLUSD|1D"], ["XRP", "COINBASE:XRPUSD|1D"]],
       chartOnly: false,
       width: "100%",
       height: "100%",
@@ -97,7 +97,7 @@ function Fallback({ kind }: { kind: WidgetKind }) {
   if (kind === "tape") {
     return (
       <div className="flex h-full min-h-[46px] items-center gap-6 overflow-hidden px-4 text-xs text-muted">
-        {["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "BNBUSDT"].map((s) => (
+        {["BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD", "BNB/USD"].map((s) => (
           <span key={s} className="shrink-0">
             <span className="text-fg font-medium">{s}</span>
             <span className="ml-2 text-accent">{p.liveWord}</span>
