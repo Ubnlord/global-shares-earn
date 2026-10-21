@@ -35,7 +35,7 @@ function SupportPage() {
         <div className="text-[11px] text-subtle">{t.supportEmail}</div>
 
         <a
-          href="mailto:"
+          href="https://wa.me/14195080286"
           className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
         >
           <Mail size={16} />
@@ -51,7 +51,7 @@ function SupportPage() {
         </a>
 
         <a
-          href="https://wa.me/14195080286?text=Hello%20GLOBAL%20BELDEX%20Support%2C%20I%20need%20assistance."
+          href="https://wa.me/14195080286?text=Hello%20GLOBAL%20SHARES%20EARN%20Support%2C%20I%20need%20assistance."
           target="_blank"
           rel="noopener noreferrer"
           className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md border border-line-strong bg-surface px-4 py-2.5 text-sm font-semibold text-fg transition-opacity hover:opacity-90"
