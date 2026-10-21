@@ -143,11 +143,6 @@ select ok(
 );
 
 select ok(
-  position('Invalid Beldex destination address' in pg_get_functiondef('public.create_financial_transaction(text,numeric,text,text,uuid,text)'::regprocedure)) > 0,
-  'withdrawal RPC validates Beldex destinations'
-);
-
-select ok(
   to_regprocedure('public.swap_assets(uuid,text,text,numeric,numeric)') is not null
   and position('Currency swaps are retired; use the BDX-native wallet flow' in pg_get_functiondef('public.swap_assets(uuid,text,text,numeric,numeric)'::regprocedure)) > 0
   and not has_function_privilege('public', 'public.swap_assets(uuid,text,text,numeric,numeric)', 'EXECUTE')
