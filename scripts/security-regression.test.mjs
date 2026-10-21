@@ -186,17 +186,17 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
       assert.ok(error, "blocked user unexpectedly created a withdrawal");
     });
 
-    await step("Beldex deposits below the 4000 BDX minimum are rejected", async () => {
+    await step("BDX-denominated deposits are rejected in USD-only mode", async () => {
       const client = await clientFor(users.normal);
       const { error } = await client.rpc("create_financial_transaction", {
         p_type: "deposit",
-        p_amount: 3999,
+        p_amount: 4000,
         p_method: "BELDEX",
         p_note: null,
         p_request_id: randomUUID(),
         p_currency: "BDX",
       });
-      assert.ok(error, "Beldex deposit below 4000 BDX unexpectedly succeeded");
+      assert.ok(error, "BDX-denominated deposit unexpectedly succeeded in USD-only mode");
     });
 
     await step("USD payment-method deposits below the 300 USD minimum are rejected", async () => {
