@@ -41,7 +41,7 @@ jobs:
 
       - name: Validate public frontend configuration
         env:
-          VITE_SUPABASE_URL: https://jarzpkwdstahbzvbevrq.supabase.co
+          VITE_SUPABASE_URL: https://dkawueeqaidtojjbejst.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY || secrets.VITE_SUPABASE_PUBLISHABLE_KEY || secrets.SUPABASE_ANON_KEY }}
         run: |
           set -euo pipefail
@@ -53,7 +53,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_SUPABASE_URL: https://jarzpkwdstahbzvbevrq.supabase.co
+          VITE_SUPABASE_URL: https://dkawueeqaidtojjbejst.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY || secrets.VITE_SUPABASE_PUBLISHABLE_KEY || secrets.SUPABASE_ANON_KEY }}
 
       - name: Prepare GitHub Pages static site
@@ -131,7 +131,7 @@ jobs:
           # Fail deployment if the generated shell cannot start the client.
           test -s "./pages-site/index.html" || { echo "ERROR: root index.html is empty"; exit 1; }
           grep -q "<script" "./pages-site/index.html" || { echo "ERROR: root index.html has no client script"; exit 1; }
-          if ! grep -R -q "jarzpkwdstahbzvbevrq" ./pages-site/assets 2>/dev/null; then
+          if ! grep -R -q "dkawueeqaidtojjbejst" ./pages-site/assets 2>/dev/null; then
             echo "ERROR: Supabase project URL was not embedded into the client bundle."
             exit 1
           fi
