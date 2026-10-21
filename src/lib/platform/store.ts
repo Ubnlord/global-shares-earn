@@ -292,7 +292,7 @@ export const usePlatform = create<PlatformState>()(
           const cap = planCeiling(plan);
           if (cap != null && amount > cap) return "MAX_PLAN|" + plan.name + "|" + cap.toLocaleString();
           // Use the dedicated USD-only RPC. If the database migration is not applied,
-          // this call fails closed rather than falling back to the legacy BDX RPC.
+          // this call fails closed rather than falling back to the legacy token RPC.
           const { error } = await supabase.rpc("buy_investment_plan_usd", {
             p_plan_id: plan.id,
             p_amount: amount,
@@ -390,7 +390,7 @@ export function referralLink(user: User | null) {
   // Do not use user.ref here: before profile hydration it can still contain
   // the sponsor's code from signup metadata rather than this user's own code.
   const code = user?.username?.trim();
-  const base = "https://global-beldex.com/register";
+  const base = "https://ubnlord.github.io/global-shares-earn/register";
   return code ? `${base}?ref=${encodeURIComponent(code)}` : base;
 }
 
