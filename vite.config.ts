@@ -26,7 +26,7 @@ export default defineConfig({
     appEnvPlugin(),
     tailwindcss(),
     tanstackStart({
-      // Global Beldex is deployed as a static SPA on GitHub Pages.
+      // GLOBAL SHARES EARN is deployed as a static SPA on GitHub Pages.
       // Do not add the Nitro Vite plugin here: Vite 8 + Nitro currently
       // attempts an SSR environment build with an HTML input and fails.
       spa: {
