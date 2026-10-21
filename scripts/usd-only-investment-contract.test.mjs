@@ -16,7 +16,7 @@ assert.doesNotMatch(store, /rpc\(["']admin_adjust_bdx_balance["']/);
 
 // Existing records retain their recorded currency when read; this is display
 // compatibility only and must not create a new BDX-denominated operation.
-assert.match(books, /currency: t\\.currency === "BDX" \\? "BDX" : "USD"/);
+assert.match(books, /currency: t\.currency === "BDX" \? "BDX" : "USD"/);
 assert.match(currencyTests, /transaction ledger blocks new non-USD accounting writes/);
 assert.match(currencyTests, /investment ledger blocks new non-USD accounting writes/);
 assert.match(currencyTests, /new non-USD transaction write is rejected/);
