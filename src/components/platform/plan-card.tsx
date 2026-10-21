@@ -21,12 +21,12 @@ export function PlanCard({
       <div className="flex items-center gap-2 text-[10px] font-semibold tracking-widest text-subtle">
         {t.page.minFunding}
         <span className="rounded-full bg-surface px-2 py-0.5 text-[11px] font-bold tracking-normal text-fg">
-          {plan.min.toLocaleString()} BDX
+          {plan.min.toLocaleString()} USD
         </span>
       </div>
       <div className="mt-3 text-sm font-bold tracking-wide text-fg">{plan.name}</div>
       <div className="mt-3 space-y-2 border-t border-line pt-3 text-[12px] text-muted">
-        <Line text={`${t.minDepositLabel}: ${plan.min.toLocaleString()} BDX`} />
+        <Line text={`${t.minDepositLabel}: ${plan.min.toLocaleString()} USD`} />
         <Line text={`${t.maxDepositLabel}: ${planMaxLabel(lang, plan.max)}`} />
         <Line text={`${t.expectedProfit}: ${plan.profit}`} />
         <Line text={`${t.duration}: ${plan.duration}`} />
@@ -99,7 +99,7 @@ export function PlanModal({
         <div className="flex items-start justify-between">
           <div>
             <div className="text-[11px] font-bold tracking-widest text-accent">{plan.name}</div>
-            <div className="mt-1 text-xl font-bold text-fg">{plan.min.toLocaleString()} BDX</div>
+            <div className="mt-1 text-xl font-bold text-fg">{plan.min.toLocaleString()} USD</div>
           </div>
           <button
             type="button"
@@ -137,7 +137,7 @@ export function TvCredit({ className }: { className?: string }) {
     <p className={cn("text-[10px] text-subtle", className)}>
       {p.liveFromTv.split("·")[0]}·{" "}
       <a
-        href="https://www.tradingview.com/symbols/BDXUSD/"
+        href="https://www.tradingview.com/symbols/BTCUSD/"
         target="_blank"
         rel="noopener noreferrer"
         className="text-accent hover:underline"
