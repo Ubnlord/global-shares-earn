@@ -291,9 +291,9 @@ export const usePlatform = create<PlatformState>()(
           if (amount < plan.min) return "MIN_PLAN|" + plan.name + "|" + plan.min.toLocaleString();
           const cap = planCeiling(plan);
           if (cap != null && amount > cap) return "MAX_PLAN|" + plan.name + "|" + cap.toLocaleString();
-          // Investment plans are BDX-native: send the entered BDX amount unchanged.
-          // PostgreSQL locks/debits bdx_balance and stores the principal as BDX.
-          const { error } = await supabase.rpc("buy_investment_plan", {
+          // Use the dedicated USD-only RPC. If the database migration is not applied,
+          // this call fails closed rather than falling back to the legacy BDX RPC.
+          const { error } = await supabase.rpc("buy_investment_plan_usd", {
             p_plan_id: plan.id,
             p_amount: amount,
           });
