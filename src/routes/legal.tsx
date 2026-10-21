@@ -13,7 +13,7 @@ function LegalPage() {
   return (
     <GuestShell>
       <article className="mx-auto max-w-[720px] px-4 py-10 sm:px-6">
-        <p className="text-xs font-semibold tracking-widest text-accent">GLOBAL BELDEX</p>
+        <p className="text-xs font-semibold tracking-widest text-accent">GLOBAL SHARES EARN</p>
         <h1 className="mt-2 text-[28px] font-bold tracking-tight">{p.legalTitle}</h1>
         <p className="mt-3 text-sm text-muted">{p.legalIntro}</p>
 
