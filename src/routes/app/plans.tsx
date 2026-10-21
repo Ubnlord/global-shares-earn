@@ -9,7 +9,7 @@ import type { Plan } from "@/lib/platform/catalog";
 import { projectedReturn } from "@/lib/platform/catalog";
 import { copy, fill } from "@/lib/platform/i18n";
 import { usePlatform } from "@/lib/platform/store";
-import { formatBdx, formatUsd } from "@/lib/utils";
+import { formatUsd } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/plans")({ component: PlansPage });
 
@@ -73,12 +73,12 @@ function PlansPage() {
             <div className="text-[11px] font-bold tracking-widest text-accent">
               {selected.name}
             </div>
-            <div className="mt-1 text-xl font-bold">{formatBdx(selected.min)} min</div>
+            <div className="mt-1 text-xl font-bold">{formatUsd(selected.min)} min</div>
             <p className="mt-2 text-[13px] text-subtle">
               {selected.profit} · {selected.duration} · max {selected.max}
             </p>
             <div className="mt-4">
-              <FieldLabel>Amount (BDX)</FieldLabel>
+              <FieldLabel>Amount (USD)</FieldLabel>
               <Input
                 type="number"
                 value={amount}
@@ -110,7 +110,7 @@ function Projection({ amount, plan }: { amount: number; plan: Plan }) {
   const { profit, total } = projectedReturn(amount, plan);
   return (
     <div className="mt-3 rounded-md border border-line bg-surface px-3 py-2 text-[12px] text-subtle">
-      {t.heldTerm} <span className="text-accent">+{formatBdx(profit)}</span> {t.profitWord} · {formatBdx(total)} {t.returned}
+      {t.heldTerm} <span className="text-accent">+{formatUsd(profit)}</span> {t.profitWord} · {formatUsd(total)} {t.returned}
     </div>
   );
 }
@@ -152,8 +152,7 @@ function InvestmentMetrics({ plan }: { plan: import("@/lib/platform/store").Acti
     ? "Completed"
     : nextRun.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 
-  const isUsd = plan.currency === "USD";
-  const formatNative = (value: number) => isUsd ? formatUsd(value) : formatBdx(value);
+  const formatNative = (value: number) => formatUsd(value);
 
   const metrics = [
     { label: "Today's Interest", value: `+${formatNative(dailyInterest)}` },
