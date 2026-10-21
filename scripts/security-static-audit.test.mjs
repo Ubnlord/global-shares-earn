@@ -78,6 +78,6 @@ test("dynamic import failures trigger guarded recovery", () => {
   assert.match(rootRoute, /\[event\.error\?\.message, event\.message\]/);
   assert.match(rootRoute, /event\.target instanceof HTMLScriptElement/);
   assert.match(rootRoute, /event\.target\.type === "module"/);
-  assert.match(rootRoute, /__global_beldex_chunk_recovery/);
-  assert.match(rootRoute, /__gb_reload/);
+  assert.match(rootRoute, /__global_shares_earn_chunk_recovery/);
+  assert.match(rootRoute, /__gse_reload/);
 });
