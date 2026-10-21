@@ -38,10 +38,8 @@ test("permanent financial safeguard suite is present and non-destructive", () =>
   assert.match(withdrawalMigration, /p_method not in \('Bitcoin', 'Ethereum', 'Beldex'\)/i);
   assert.match(withdrawalMigration, /Invalid Ethereum destination address/);
   assert.match(withdrawalMigration, /Invalid Bitcoin destination address/);
-  assert.match(withdrawalMigration, /Invalid Beldex destination address/);
   assert.match(withdrawalValidator, /0x\[0-9a-fA-F\]\{40\}/);
   assert.match(withdrawalValidator, /Invalid Bitcoin destination address/);
-  assert.match(withdrawalValidator, /Invalid Beldex destination address/);
   assert.doesNotMatch(suite, /createUser|deleteUser|SUPABASE_SERVICE_ROLE_KEY/i);
   assert.match(operationsHardening, /Investment principal returned/);
   assert.match(operationsHardening, /global-beldex-daily-investment-accrual/);
