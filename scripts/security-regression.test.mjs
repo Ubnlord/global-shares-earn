@@ -557,71 +557,35 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
       assert.ok(Array.isArray(auditRows));
     });
 
-    await step("BDX admin adjustment enforces permission, idempotency, and audit integrity", async () => {
-      const noPermissionClient = await clientFor(users.adminNoPermission);
-      const reference = `security-bdx-adjustment-${suffix}`;
-      const denied = await noPermissionClient.rpc("admin_adjust_bdx_balance", {
-        p_user_id: users.normal.id,
-        p_delta: 25,
-        p_reason: "security regression permission test",
-        p_reference: reference,
-      });
-      assert.ok(denied.error, "admin without approve_transactions unexpectedly adjusted a BDX balance");
-
+    await step("legacy BDX admin adjustment is rejected without balance or ledger changes", async () => {
       const before = await admin.from("user_profile")
-        .select("bdx_balance")
+        .select("bdx_balance,available_balance")
         .eq("user_id", users.normal.id)
         .single();
       assert.ifError(before.error);
-
       const adminClient = await clientFor(users.admin);
-      const args = {
+      const reference = `security-bdx-adjustment-${suffix}`;
+      const result = await adminClient.rpc("admin_adjust_bdx_balance", {
         p_user_id: users.normal.id,
         p_delta: 25,
-        p_reason: "security regression idempotency test",
+        p_reason: "USD-only cutover regression test",
         p_reference: reference,
-      };
-      const first = await adminClient.rpc("admin_adjust_bdx_balance", args);
-      assert.ifError(first.error);
-      assert.ok(first.data?.id, "BDX adjustment did not return a transaction row");
-
-      const replay = await adminClient.rpc("admin_adjust_bdx_balance", args);
-      assert.ifError(replay.error);
-      assert.equal(replay.data?.id, first.data.id, "same reference must replay the original transaction");
-
-      const conflictingReplay = await adminClient.rpc("admin_adjust_bdx_balance", {
-        ...args,
-        p_delta: 26,
       });
-      assert.ok(conflictingReplay.error, "same reference unexpectedly accepted a different adjustment");
-
+      assert.ok(result.error, "legacy BDX admin adjustment unexpectedly succeeded");
       const after = await admin.from("user_profile")
-        .select("bdx_balance")
+        .select("bdx_balance,available_balance")
         .eq("user_id", users.normal.id)
         .single();
       assert.ifError(after.error);
-      assert.equal(Number(after.data.bdx_balance) - Number(before.data.bdx_balance), 25,
-        "replay or conflicting replay changed the BDX balance more than once");
-
+      assert.equal(Number(after.data.bdx_balance), Number(before.data.bdx_balance));
+      assert.equal(Number(after.data.available_balance), Number(before.data.available_balance));
       const { data: transactions, error: transactionError } = await admin.from("transaction")
-        .select("id,currency,amount,method,request_id")
-        .eq("id", first.data.id);
+        .select("id")
+        .eq("user_id", users.normal.id)
+        .eq("currency", "BDX")
+        .eq("request_id", reference);
       assert.ifError(transactionError);
-      assert.equal(transactions?.length, 1);
-      assert.equal(transactions[0].currency, "BDX");
-      assert.equal(Number(transactions[0].amount), 25);
-      assert.equal(transactions[0].method, "Admin BDX adjustment");
-
-      const { data: auditRows, error: auditError } = await admin.from("admin_action_audit")
-        .select("id,action,target_id,reason,new_values")
-        .eq("target_id", first.data.id)
-        .eq("action", "bdx_balance_adjusted");
-      assert.ifError(auditError);
-      assert.equal(auditRows?.length, 1, "one matching admin audit row must exist");
-      assert.equal(auditRows[0].reason, args.p_reason);
-      assert.equal(auditRows[0].new_values?.currency, "BDX");
-      assert.equal(auditRows[0].new_values?.reference, reference);
-      assert.equal(Number(auditRows[0].new_values?.delta), 25);
+      assert.equal(transactions?.length, 0, "rejected adjustment must not create a BDX transaction");
     });
 
     await step("duplicate request_id is idempotent", async () => {
