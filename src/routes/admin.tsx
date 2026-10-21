@@ -20,10 +20,11 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { supabase } from "@/lib/supabase/client";
+import { PLANS } from "@/lib/platform/catalog";
 
 export const Route = createFileRoute("/admin")({ component: AdminPage });
 
-export type Tab = "dashboard" | "transactions" | "users" | "investments" | "kyc" | "reconciliation" | "audit" | "settings";
+export type Tab = "dashboard" | "transactions" | "users" | "investments" | "plans" | "kyc" | "reconciliation" | "audit" | "settings";
 
 type Tx = {
   id: string;
@@ -488,6 +489,7 @@ export function AdminPage({ initialTab = "dashboard", transactionType }: { initi
                     ["transactions", "Transactions"],
                     ["users", "Users"],
                     ["investments", "Investments"],
+                    ["plans", "Investment plans"],
                     ["kyc", "KYC"],
                     ["reconciliation", "Reconciliation"],
                     ["audit", "Audit log"],
@@ -564,6 +566,43 @@ export function AdminPage({ initialTab = "dashboard", transactionType }: { initi
 
               {tab === "investments" && (
                 <InvestmentQueue users={filteredUsers} onOpen={(id) => void openUser(id)} />
+              )}
+
+              {tab === "plans" && (
+                <div className="p-4 sm:p-5">
+                  <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
+                    <div className="font-semibold text-fg">Investment plan catalog · review required</div>
+                    <p className="mt-1 text-sm text-muted">
+                      These are the requested GSE plan definitions. Return terms are not verified, so new purchases remain disabled.
+                      This screen is read-only; it does not change production plan terms or existing investments.
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto rounded-xl border border-line">
+                    <table className="w-full min-w-[680px] text-left text-sm">
+                      <thead className="bg-elevated text-muted">
+                        <tr>
+                          <th className="p-3 font-medium">Plan</th>
+                          <th className="p-3 font-medium">Investment range</th>
+                          <th className="p-3 font-medium">Term</th>
+                          <th className="p-3 font-medium">Return status</th>
+                          <th className="p-3 font-medium">Availability</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-line">
+                        {PLANS.map((plan) => (
+                          <tr key={plan.id}>
+                            <td className="p-3 font-medium text-fg">{plan.name}</td>
+                            <td className="p-3 text-fg">${plan.min.toLocaleString()} – ${plan.max.replace(/ USD$/i, "")}</td>
+                            <td className="p-3 text-fg">{plan.duration}</td>
+                            <td className="p-3 text-muted">{plan.profit}</td>
+                            <td className="p-3"><span className="rounded-full border border-amber-500/30 px-2 py-1 text-xs text-amber-300">Disabled pending review</span></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="mt-3 text-xs text-muted">Next required step: persist approved plan terms through a protected database operation with administrator authorization and an audit record.</p>
+                </div>
               )}
 
               {tab === "kyc" && (
