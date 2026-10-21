@@ -1,12 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ExternalLink } from "lucide-react";
 import {
   AdvancedChart,
   MiniChart,
   SymbolOverview,
   TickerTape,
 } from "@/components/market/tradingview";
-import { LiveBadge, PriceChip } from "@/components/market/live-price";
 import { TvCredit } from "@/components/platform/plan-card";
 import { copy } from "@/lib/platform/i18n";
 import { usePlatform } from "@/lib/platform/store";
@@ -22,9 +20,7 @@ function MarketsPage() {
       <div className="mt-4 flex items-start justify-between gap-3">
         <div>
           <h2 className="text-xl font-bold">{t.markets}</h2>
-          <LiveBadge className="mt-2" />
         </div>
-        <PriceChip />
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <section id="forex" className="scroll-mt-24 rounded-lg border border-line bg-elevated p-4">
@@ -48,18 +44,15 @@ function MarketsPage() {
           <div className="text-xs font-semibold tracking-widest text-accent">CRYPTOS</div>
           <h3 className="mt-1 text-base font-bold">Crypto Markets</h3>
           <p className="mt-2 text-[12px] leading-5 text-subtle">
-            View crypto-market information and the BDX market tools available on Global Beldex.
-            The live BDX market price, chart, and market overview below show market information
-            when a live source is available.
+            Follow live prices and charts for major cryptocurrencies, including Bitcoin, Ethereum,
+            Solana, XRP, and other widely traded digital assets. Prices are provided by TradingView
+            and may be delayed or unavailable at times.
           </p>
-          <a
-            href="https://www.tradingview.com/symbols/BDXUSD/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex text-[11px] font-semibold text-accent hover:underline"
-          >
-            Open BDX/USD chart <ExternalLink size={11} className="ml-1" />
-          </a>
+          <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
+            {["BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD"].map((symbol) => (
+              <span key={symbol} className="rounded-full border border-line px-2 py-1 text-muted">{symbol}</span>
+            ))}
+          </div>
         </section>
       </div>
 
@@ -67,12 +60,12 @@ function MarketsPage() {
         <div className="mb-3 flex items-center justify-between">
           <div className="text-[13px] font-semibold">{t.page.liveMarketTv}</div>
           <a
-            href="https://www.tradingview.com/symbols/BDXUSD/"
+            href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-[10px] text-accent"
+            className="text-[10px] text-accent hover:underline"
           >
-            {t.page.trackBdx} <ExternalLink size={10} />
+            Explore crypto markets
           </a>
         </div>
         <AdvancedChart />
