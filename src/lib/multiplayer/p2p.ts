@@ -192,9 +192,9 @@ export class P2PRoom {
       name: this.opts.name ?? "",
       since: String(this.cursor),
     });
-    const res = await fetch(\`/api/rtc?\${params}\`);
+    const res = await fetch(`/api/rtc?${params}`);
     if (this.closed) return;
-    if (!res.ok) throw new Error(\`signaling poll failed: \${res.status}\`);
+    if (!res.ok) throw new Error(`signaling poll failed: ${res.status}`);
     const body = (await res.json()) as RtcPollResponse;
     if (this.closed) return;
     if (!this.everPolled) {
@@ -461,12 +461,12 @@ export class P2PRoom {
           }),
         });
         if (res.ok) return;
-        throw new Error(\`signal POST failed: \${res.status}\`);
+        throw new Error(`signal POST failed: ${res.status}`);
       } catch (err) {
         if (attempt >= SIGNAL_RETRY_DELAYS_MS.length) {
           // Delivery gave up; the pair converges on the next offer cycle (or
           // the watchdog rebuilds it). Logged once so failures are visible.
-          console.warn(\`[p2p] signal \${kind} to \${to} failed after retries\`, err);
+          console.warn(`[p2p] signal ${kind} to ${to} failed after retries`, err);
           return;
         }
         await new Promise((r) => setTimeout(r, SIGNAL_RETRY_DELAYS_MS[attempt]));
