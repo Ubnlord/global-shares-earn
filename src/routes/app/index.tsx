@@ -5,11 +5,9 @@ import {
   ArrowUpFromLine,
   Copy,
   ExternalLink,
-  Gift,
   History,
   LayoutGrid,
   TrendingUp,
-  Users,
   Wallet,
   X,
 } from "lucide-react";
