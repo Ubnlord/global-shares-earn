@@ -1,4 +1,4 @@
-name: Deploy Global Beldex to GitHub Pages
+name: Deploy GLOBAL SHARES EARN to GitHub Pages
 
 # Production Pages deployment: every main-branch push rebuilds and publishes the current app.
 
@@ -115,7 +115,7 @@ jobs:
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
-              <title>Global Beldex</title>
+              <title>GLOBAL SHARES EARN</title>
               {css_tag}
             </head>
             <body>
