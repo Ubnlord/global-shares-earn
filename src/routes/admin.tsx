@@ -30,7 +30,7 @@ type Tx = {
   user_id: string;
   type: string;
   amount: string | number;
-  currency?: "BDX" | "USD";
+  currency?: "Legacy" | "USD";
   status: string;
   approval_status: string;
   method: string | null;
@@ -64,7 +64,7 @@ type Investment = {
   user_id: string;
   plan_id: string | null;
   principal: string | number;
-  currency?: "BDX" | "USD";
+  currency?: "Legacy" | "USD";
   daily_rate: string | number;
   duration_days: number;
   started_at: string;
@@ -525,7 +525,7 @@ export function AdminPage({ initialTab = "dashboard", transactionType }: { initi
                             <span className="font-semibold capitalize text-fg">{tx.type}</span>
                             <Status value={tx.approval_status} />
                             <Status value={tx.status} />
-                            <span className="text-lg font-semibold text-fg">{money(tx.amount)} {tx.currency === "BDX" ? "BDX" : "USD"}</span>
+                            <span className="text-lg font-semibold text-fg">{money(tx.amount)} {tx.currency === "Legacy" ? "Legacy" : "USD"}</span>
                           </div>
                           <p className="mt-1 text-sm text-muted">{tx.method || "No method"} · {new Date(tx.created_at).toLocaleString()}</p>
                           <p className="mt-1 break-all text-xs text-subtle">User: {tx.user_id} · Transaction: {tx.id}</p>
@@ -696,7 +696,7 @@ function ReconciliationPanel({ rows, loading, problems, onRun }: { rows: Reconci
           </div>
           <div className="mt-4 overflow-x-auto rounded-xl border border-line">
             <table className="min-w-[1650px] w-full text-left text-xs">
-              <thead className="bg-elevated text-muted"><tr><th className="p-3">User</th><th className="p-3">Available</th><th className="p-3">Locked Δ</th><th className="p-3">Deposits Δ</th><th className="p-3">Withdrawals Δ</th><th className="p-3">Referrals Δ</th><th className="p-3">Profit Δ (USD)</th><th className="p-3">BDX available</th><th className="p-3">BDX locked Δ</th><th className="p-3">BDX deposits Δ</th><th className="p-3">BDX withdrawals Δ</th><th className="p-3">BDX referrals Δ</th><th className="p-3">BDX profit Δ</th><th className="p-3">Status</th></tr></thead>
+              <thead className="bg-elevated text-muted"><tr><th className="p-3">User</th><th className="p-3">Available</th><th className="p-3">Locked Δ</th><th className="p-3">Deposits Δ</th><th className="p-3">Withdrawals Δ</th><th className="p-3">Referrals Δ</th><th className="p-3">Profit Δ (USD)</th><th className="p-3">Legacy available</th><th className="p-3">BDX locked Δ</th><th className="p-3">BDX deposits Δ</th><th className="p-3">BDX withdrawals Δ</th><th className="p-3">BDX referrals Δ</th><th className="p-3">BDX profit Δ</th><th className="p-3">Status</th></tr></thead>
               <tbody className="divide-y divide-line">{rows.map((row) => {
                 const bad = row.negative_balance || !deltaOk(row.locked_delta) || !deltaOk(row.deposits_delta) || !deltaOk(row.withdrawals_delta) || !deltaOk(row.referral_delta) || !deltaOk(row.investment_profit_delta) || !deltaOk(row.locked_bdx_delta) || !deltaOk(row.deposits_bdx_delta) || !deltaOk(row.withdrawals_bdx_delta) || !deltaOk(row.referral_bdx_delta) || !deltaOk(row.investment_profit_bdx_delta);
                 return <tr key={row.user_id}><td className="p-3 font-mono text-[10px]">{row.user_id}</td><td className="p-3">{money(row.available_balance)}</td><td className="p-3">{money(row.locked_delta)}</td><td className="p-3">{money(row.deposits_delta)}</td><td className="p-3">{money(row.withdrawals_delta)}</td><td className="p-3">{money(row.referral_delta)}</td><td className="p-3">{money(row.investment_profit_delta)}</td><td className="p-3">{money(row.bdx_balance)} BDX</td><td className="p-3">{money(row.locked_bdx_delta)} BDX</td><td className="p-3">{money(row.deposits_bdx_delta)} BDX</td><td className="p-3">{money(row.withdrawals_bdx_delta)} BDX</td><td className="p-3">{money(row.referral_bdx_delta)} BDX</td><td className="p-3">{money(row.investment_profit_bdx_delta)} BDX</td><td className="p-3"><Status value={bad ? "review" : "ok"} /></td></tr>;
@@ -763,8 +763,8 @@ function UserModal({ user, investments, txs, canUsers, canInvestments, busy, blo
         <div className="mt-5 grid gap-3 sm:grid-cols-4">
           <MiniStat label="USD available" value={money(user.available_balance)} />
           <MiniStat label="USD locked" value={money(user.locked_balance)} />
-          <MiniStat label="BDX available" value={`${money(user.bdx_balance)} BDX`} />
-          <MiniStat label="BDX locked" value={`${money(user.locked_bdx_balance)} BDX`} />
+          <MiniStat label="Legacy available" value={`${money(user.bdx_balance)} BDX`} />
+          <MiniStat label="Legacy locked" value={`${money(user.locked_bdx_balance)} BDX`} />
           <MiniStat label="USD deposits" value={money(user.total_deposits)} />
           <MiniStat label="USD withdrawals" value={money(user.total_withdrawals)} />
         </div>
@@ -785,7 +785,7 @@ function UserModal({ user, investments, txs, canUsers, canInvestments, busy, blo
           {investments.length === 0 ? <EmptyState text="No investments found for this user." /> : investments.map((investment) => (
             <div key={investment.id} className="rounded-2xl border border-line bg-surface p-4">
               <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                <div><div className="flex flex-wrap items-center gap-2"><span className="font-semibold text-fg">{investment.plan_id || "Investment plan"}</span><Status value={investment.status} /><Status value={investment.daily_accrual_enabled ? "accrual on" : "accrual off"} /></div><div className="mt-2 grid gap-2 text-sm text-muted sm:grid-cols-3"><span>Principal: <b className="text-fg">{money(investment.principal)} {investment.currency === "BDX" ? "BDX" : "USD"}</b></span><span>Daily rate: <b className="text-fg">{percent(investment.daily_rate)}</b></span><span>Profit credited: <b className="text-fg">{money(investment.credited_profit)} {investment.currency === "BDX" ? "BDX" : "USD"}</b></span></div><div className="mt-1 text-xs text-subtle">{investment.duration_days} days · Started {new Date(investment.started_at).toLocaleDateString()} · Last accrual {new Date(investment.last_accrual_at).toLocaleString()}</div></div>
+                <div><div className="flex flex-wrap items-center gap-2"><span className="font-semibold text-fg">{investment.plan_id || "Investment plan"}</span><Status value={investment.status} /><Status value={investment.daily_accrual_enabled ? "accrual on" : "accrual off"} /></div><div className="mt-2 grid gap-2 text-sm text-muted sm:grid-cols-3"><span>Principal: <b className="text-fg">{money(investment.principal)} {investment.currency === "Legacy" ? "Historical" : "USD"}</b></span><span>Daily rate: <b className="text-fg">{percent(investment.daily_rate)}</b></span><span>Profit credited: <b className="text-fg">{money(investment.credited_profit)} {investment.currency === "Legacy" ? "Historical" : "USD"}</b></span></div><div className="mt-1 text-xs text-subtle">{investment.duration_days} days · Started {new Date(investment.started_at).toLocaleDateString()} · Last accrual {new Date(investment.last_accrual_at).toLocaleString()}</div></div>
                 <div className="flex flex-wrap gap-2">
                   <input aria-label="Daily rate percent" type="number" min="0" step="0.01" value={rateDrafts[investment.id] ?? String(Number(investment.daily_rate) * 100)} onChange={(event) => setRateDrafts((current) => ({ ...current, [investment.id]: event.target.value }))} disabled={!canInvestments} className="w-28 rounded-xl border border-line bg-panel px-3 py-2 text-sm text-fg outline-none disabled:opacity-60" />
                   <button type="button" disabled={!canInvestments || busy === `investment:${investment.id}`} onClick={() => { const value = Number(rateDrafts[investment.id]); if (!Number.isFinite(value) || value < 0) return; void onUpdateInvestment(investment.id, value); }} className="rounded-xl border border-line px-3 py-2 text-sm font-medium text-fg hover:bg-elevated disabled:opacity-60">Save rate %</button>
