@@ -1,5 +1,5 @@
 const faqsEn = [
-  { q: "Is this a live brokerage?", a: "Yes. GLOBAL BELDEX is a professional investment platform with live Beldex charts from TradingView. Balances, deposits, and plans are processed in real-time." },
+  { q: "Is this a live brokerage?", a: "Yes. GLOBAL SHARES EARN is a professional investment platform with live Beldex charts from TradingView. Balances, deposits, and plans are processed in real-time." },
   { q: "What is the minimum deposit?", a: "A $300 minimum deposit is required to activate a live account and access investment plans." },
   { q: "How do investment plans work?", a: "Each plan locks a specific amount for a fixed duration and accrues the listed daily profit. When the term ends, principal plus profit return to your available balance." },
   { q: "Where does market data come from?", a: "Ticker, overview, and candlestick widgets are official TradingView embeds for CRYPTO:BDXUSD and major pairs, providing tier-1 liquidity pricing." },
@@ -10,11 +10,11 @@ export const pageEn = {
   heroTitle: "Building Wealth with Vision.",
   heroSub: "Investing in Tomorrow, Today.",
   heroLead:
-    "Global Beldex empowers investors to confidently trade CFDs on Forex, BDX, Crypto, and Indices. Benefit from advanced investing tools, tailored support, and industry-leading security. Whether you're a beginner or experienced investor, Global Beldex offers a seamless, secure platform designed to elevate your investment experience with precision and control.",
+    "Global Shares Earn empowers investors to confidently trade CFDs on Forex, BDX, Crypto, and Indices. Benefit from advanced investing tools, tailored support, and industry-leading security. Whether you're a beginner or experienced investor, Global Shares Earn offers a seamless, secure platform designed to elevate your investment experience with precision and control.",
   registerNow: "Register Now",
   conditionsCharges: "Investment Conditions & Charges",
   platformsLead:
-    "At GLOBAL BELDEX, we offer a wide variety of platforms for investors of all levels.",
+    "At GLOBAL SHARES EARN, we offer a wide variety of platforms for investors of all levels.",
   goodCompany: "You're In Good Company",
   companyCards: [
     {
@@ -62,7 +62,7 @@ export const pageEn = {
   step3t: "Activate a plan",
   step3d: "Lock funds into GNS through Falcon. Daily profit accrues until the term ends.",
   plansBoard: "GNS starts at 4,000 BDX. Build Up through Falcon use the same premium terms inside the account.",
-  footerEdu: "© GLOBAL BELDEX — Live market data provided by TradingView.",
+  footerEdu: "© GLOBAL SHARES EARN — Live market data provided by TradingView.",
   createToInvest: "Create account to invest",
   accountOverview: "Account Overview",
   liveDot: "Live · TradingView",
@@ -76,7 +76,7 @@ export const pageEn = {
   planMeta: "{amount} locked · {pct}% ROI · {days} days",
   liveFoot: " · Live data from TradingView · ",
   demoFoot: "Professional interface · Live data from TradingView",
-  dashPreview: "GLOBAL BELDEX",
+  dashPreview: "GLOBAL SHARES EARN",
   availableTape: "Grow your wealth",
   signInSim: "Sign in to access your portfolio",
   badLogin: "Email or password is wrong.",
@@ -101,7 +101,7 @@ export const pageEn = {
   errorTitle: "Something went wrong",
   errorFallback: "An unexpected error occurred. Please try reloading the page.",
   legalTitle: "Terms, privacy and risk",
-  legalIntro: "Global Beldex is a professional trading and investment platform. We provide highly secure wallets, real-time market execution, and institutional-grade charting tools.",
+  legalIntro: "Global Shares Earn is a professional trading and investment platform. We provide highly secure wallets, real-time market execution, and institutional-grade charting tools.",
   legalBack: "Back to the platform",
   legalTerms: [
     "By opening an account, you can deposit funds starting from $300, execute swaps between USD and BDX, and stake assets into our GNS and Falcon plans.",
@@ -124,10 +124,10 @@ export const pageEs: typeof pageEn = {
   heroTitle: "Construye patrimonio con visión.",
   heroSub: "Invierte en el mañana, hoy.",
   heroLead:
-    "Global Beldex permite invertir con confianza en CFDs de Forex, BDX, cripto e índices. Herramientas avanzadas, soporte a medida y seguridad de primer nivel, tanto si empiezas como si ya inviertes.",
+    "Global Shares Earn permite invertir con confianza en CFDs de Forex, BDX, cripto e índices. Herramientas avanzadas, soporte a medida y seguridad de primer nivel, tanto si empiezas como si ya inviertes.",
   registerNow: "Regístrate ahora",
   conditionsCharges: "Condiciones y cargos",
-  platformsLead: "En GLOBAL BELDEX hay plataformas para inversores de todos los niveles.",
+  platformsLead: "En GLOBAL SHARES EARN hay plataformas para inversores de todos los niveles.",
   goodCompany: "Estás en buena compañía",
   companyCards: [
     { title: "Principiantes", body: "Abre una cuenta, sigue el precio de Beldex en vivo y elige el plan que encaja con tu saldo." },
@@ -166,7 +166,7 @@ export const pageEs: typeof pageEn = {
   step3t: "Activa un plan",
   step3d: "Bloquea fondos de GNS a Falcon. La ganancia diaria se acumula hasta que termina el plazo.",
   plansBoard: "GNS empieza en 4.000 BDX. De Build Up a Falcon se usan plazos premium dentro de la cuenta.",
-  footerEdu: "© GLOBAL BELDEX — Datos de mercado en vivo por TradingView.",
+  footerEdu: "© GLOBAL SHARES EARN — Datos de mercado en vivo por TradingView.",
   createToInvest: "Crea una cuenta para invertir",
   accountOverview: "Resumen de la cuenta",
   liveDot: "En vivo · TradingView",
@@ -205,7 +205,7 @@ export const pageEs: typeof pageEn = {
   errorTitle: "Algo salió mal",
   errorFallback: "Ocurrió un error inesperado. Por favor, recarga la página.",
   legalTitle: "Términos, privacidad y riesgo",
-  legalIntro: "Global Beldex es una plataforma profesional de inversión y trading. Proveemos carteras seguras, ejecución en tiempo real y herramientas gráficas de grado institucional.",
+  legalIntro: "Global Shares Earn es una plataforma profesional de inversión y trading. Proveemos carteras seguras, ejecución en tiempo real y herramientas gráficas de grado institucional.",
   legalBack: "Volver a la plataforma",
   legalTerms: [
     "Puedes abrir una cuenta, depositar un importe inicial desde $300, cambiar entre USD y BDX, y hacer staking de fondos en planes GNS y Falcon.",
@@ -222,7 +222,7 @@ export const pageEs: typeof pageEn = {
     "Asegúrate de entender plenamente los riesgos antes de operar con activos reales. La información aquí provista no constituye asesoramiento financiero o fiscal.",
   ],
   faqs: [
-    { q: "¿Es esta una plataforma real?", a: "Sí. GLOBAL BELDEX es una plataforma de inversión profesional con gráficos en vivo de TradingView. Los saldos, depósitos y planes operan en tiempo real." },
+    { q: "¿Es esta una plataforma real?", a: "Sí. GLOBAL SHARES EARN es una plataforma de inversión profesional con gráficos en vivo de TradingView. Los saldos, depósitos y planes operan en tiempo real." },
     { q: "¿Cuál es el depósito mínimo?", a: "Se requiere un depósito mínimo de $300 para activar la cuenta y acceder a los planes de inversión." },
     { q: "¿Cómo funcionan los planes?", a: "Cada plan bloquea una cantidad por un plazo fijo y acumula el rendimiento diario listado. Al terminar, el capital y las ganancias regresan a tu saldo disponible." },
     { q: "¿De dónde salen los datos de mercado?", a: "Los widgets de resumen y velas provienen directamente de TradingView para CRYPTO:BDXUSD, con liquidez de primer nivel." },
@@ -234,10 +234,10 @@ export const pageFr: typeof pageEn = {
   heroTitle: "Construire un patrimoine avec une vision.",
   heroSub: "Investir dans demain, aujourd’hui.",
   heroLead:
-    "Global Beldex permet d’investir en CFD sur le Forex, BDX, la crypto et les indices. Outils avancés, accompagnement et sécurité de haut niveau, que vous débutiez ou soyez un trader confirmé.",
+    "Global Shares Earn permet d’investir en CFD sur le Forex, BDX, la crypto et les indices. Outils avancés, accompagnement et sécurité de haut niveau, que vous débutiez ou soyez un trader confirmé.",
   registerNow: "S’inscrire",
   conditionsCharges: "Conditions et frais",
-  platformsLead: "Chez GLOBAL BELDEX, des plateformes pour les investisseurs de tous niveaux.",
+  platformsLead: "Chez GLOBAL SHARES EARN, des plateformes pour les investisseurs de tous niveaux.",
   goodCompany: "Vous êtes en bonne compagnie",
   companyCards: [
     { title: "Débutants", body: "Ouvrez un compte, suivez le prix Beldex en direct et choisissez le plan qui correspond à votre capital." },
@@ -276,7 +276,7 @@ export const pageFr: typeof pageEn = {
   step3t: "Activer un plan",
   step3d: "Bloquez des fonds de GNS à Falcon. Le profit quotidien court jusqu’à la fin du terme.",
   plansBoard: "GNS commence à 4 000 BDX. De Build Up à Falcon, les mêmes conditions premium s'appliquent.",
-  footerEdu: "© GLOBAL BELDEX — Données de marché en direct par TradingView.",
+  footerEdu: "© GLOBAL SHARES EARN — Données de marché en direct par TradingView.",
   createToInvest: "Créez un compte pour investir",
   accountOverview: "Aperçu du compte",
   liveDot: "En direct · TradingView",
@@ -315,7 +315,7 @@ export const pageFr: typeof pageEn = {
   errorTitle: "Un problème est survenu",
   errorFallback: "Une erreur inattendue s’est produite. Veuillez recharger la page.",
   legalTitle: "Conditions, confidentialité et risques",
-  legalIntro: "Global Beldex est une plateforme professionnelle de trading. Nous fournissons des portefeuilles sécurisés, une exécution en temps réel et des outils graphiques de niveau institutionnel.",
+  legalIntro: "Global Shares Earn est une plateforme professionnelle de trading. Nous fournissons des portefeuilles sécurisés, une exécution en temps réel et des outils graphiques de niveau institutionnel.",
   legalBack: "Retour à la plateforme",
   legalTerms: [
     "Vous pouvez ouvrir un compte, effectuer un dépôt à partir de 300 $, trader entre l'USD et le BDX, et staker des fonds via nos plans GNS et Falcon.",
@@ -332,7 +332,7 @@ export const pageFr: typeof pageEn = {
     "Assurez-vous de bien comprendre les risques avant de trader. Aucune information sur cette plateforme ne constitue un conseil financier ou fiscal.",
   ],
   faqs: [
-    { q: "S'agit-il d'une plateforme de courtage réelle ?", a: "Oui. GLOBAL BELDEX est une plateforme d'investissement professionnelle. Les soldes, dépôts et plans sont traités en temps réel." },
+    { q: "S'agit-il d'une plateforme de courtage réelle ?", a: "Oui. GLOBAL SHARES EARN est une plateforme d'investissement professionnelle. Les soldes, dépôts et plans sont traités en temps réel." },
     { q: "Quel est le dépôt minimum ?", a: "Un dépôt minimum de 300 $ est requis pour activer votre compte et accéder aux plans d'investissement." },
     { q: "Comment fonctionnent les plans ?", a: "Chaque plan bloque vos fonds pour une durée fixe et génère des profits quotidiens. À terme, le capital et les gains s'ajoutent à votre solde disponible." },
     { q: "D’où viennent les données de marché ?", a: "Les flux et graphiques proviennent des widgets officiels de TradingView pour CRYPTO:BDXUSD avec une liquidité de premier plan." },
@@ -344,10 +344,10 @@ export const pageIt: typeof pageEn = {
   heroTitle: "Costruire patrimonio con una visione.",
   heroSub: "Investire nel domani, oggi.",
   heroLead:
-    "Global Beldex permette di investire in CFD su Forex, BDX, crypto e indici. Strumenti avanzati, supporto su misura e sicurezza di alto livello, per investitori principianti ed esperti.",
+    "Global Shares Earn permette di investire in CFD su Forex, BDX, crypto e indici. Strumenti avanzati, supporto su misura e sicurezza di alto livello, per investitori principianti ed esperti.",
   registerNow: "Registrati ora",
   conditionsCharges: "Condizioni e costi",
-  platformsLead: "In GLOBAL BELDEX ci sono piattaforme per investitori di ogni livello.",
+  platformsLead: "In GLOBAL SHARES EARN ci sono piattaforme per investitori di ogni livello.",
   goodCompany: "Sei in buona compagnia",
   companyCards: [
     { title: "Principianti", body: "Apri un account, segui il prezzo Beldex live e scegli il piano adatto al tuo capitale." },
@@ -386,7 +386,7 @@ export const pageIt: typeof pageEn = {
   step3t: "Attiva un piano",
   step3d: "Blocca fondi da GNS a Falcon. Il profitto giornaliero cresce fino alla fine del periodo.",
   plansBoard: "GNS parte da 4.000 BDX. Da Build Up a Falcon si applicano le stesse condizioni premium.",
-  footerEdu: "© GLOBAL BELDEX — Dati di mercato live forniti da TradingView.",
+  footerEdu: "© GLOBAL SHARES EARN — Dati di mercato live forniti da TradingView.",
   createToInvest: "Crea un account per investire",
   accountOverview: "Panoramica account",
   liveDot: "Live · TradingView",
@@ -425,7 +425,7 @@ export const pageIt: typeof pageEn = {
   errorTitle: "Qualcosa è andato storto",
   errorFallback: "Si è verificato un errore imprevisto. Ti preghiamo di ricaricare la pagina.",
   legalTitle: "Termini, privacy e rischio",
-  legalIntro: "Global Beldex è una piattaforma di trading e investimento professionale. Offriamo wallet ultra-sicuri, esecuzione in tempo reale e grafici di livello istituzionale.",
+  legalIntro: "Global Shares Earn è una piattaforma di trading e investimento professionale. Offriamo wallet ultra-sicuri, esecuzione in tempo reale e grafici di livello istituzionale.",
   legalBack: "Torna alla piattaforma",
   legalTerms: [
     "Puoi aprire un account, depositare fondi a partire da $300, effettuare swap tra USD e BDX e bloccare asset nei piani GNS e Falcon.",
@@ -442,7 +442,7 @@ export const pageIt: typeof pageEn = {
     "Assicurati di comprendere appieno i rischi prima di operare. Nessuna informazione fornita costituisce consulenza finanziaria o fiscale.",
   ],
   faqs: [
-    { q: "È un broker vero?", a: "Sì. GLOBAL BELDEX è una piattaforma di investimento professionale con grafici e flussi in tempo reale. I saldi e i depositi sono elaborati live." },
+    { q: "È un broker vero?", a: "Sì. GLOBAL SHARES EARN è una piattaforma di investimento professionale con grafici e flussi in tempo reale. I saldi e i depositi sono elaborati live." },
     { q: "Qual è il deposito minimo?", a: "È richiesto un deposito minimo di $300 per attivare l'account e accedere ai piani di investimento." },
     { q: "Come funzionano i piani?", a: "Ogni piano blocca un importo per una durata fissa e genera profitti giornalieri. Alla scadenza, capitale e profitti tornano al saldo disponibile." },
     { q: "Da dove arrivano i dati di mercato?", a: "I flussi e le candele sono widget ufficiali forniti da TradingView per CRYPTO:BDXUSD con liquidità di primo livello." },
@@ -454,10 +454,10 @@ export const pagePt: typeof pageEn = {
   heroTitle: "Construir patrimônio com visão.",
   heroSub: "Investir no amanhã, hoje.",
   heroLead:
-    "A Global Beldex permite investir com confiança em CFDs de Forex, BDX, cripto e índices. Ferramentas avançadas, suporte sob medida e segurança de alto nível, para investidores de todos os perfis.",
+    "A Global Shares Earn permite investir com confiança em CFDs de Forex, BDX, cripto e índices. Ferramentas avançadas, suporte sob medida e segurança de alto nível, para investidores de todos os perfis.",
   registerNow: "Cadastre-se agora",
   conditionsCharges: "Condições e taxas",
-  platformsLead: "Na GLOBAL BELDEX há plataformas para investidores de todos os níveis.",
+  platformsLead: "Na GLOBAL SHARES EARN há plataformas para investidores de todos os níveis.",
   goodCompany: "Você está em boa companhia",
   companyCards: [
     { title: "Iniciantes", body: "Abra uma conta, acompanhe o preço ao vivo da Beldex e escolha o plano adequado ao seu capital." },
@@ -496,7 +496,7 @@ export const pagePt: typeof pageEn = {
   step3t: "Ative um plano",
   step3d: "Faça staking de fundos GNS até Falcon. O lucro diário é acumulado até o fim do prazo.",
   plansBoard: "GNS começa em 4.000 BDX. De Build Up a Falcon aplicam-se as mesmas condições premium.",
-  footerEdu: "© GLOBAL BELDEX — Dados de mercado ao vivo fornecidos pela TradingView.",
+  footerEdu: "© GLOBAL SHARES EARN — Dados de mercado ao vivo fornecidos pela TradingView.",
   createToInvest: "Crie uma conta para investir",
   accountOverview: "Visão da conta",
   liveDot: "Ao vivo · TradingView",
@@ -535,7 +535,7 @@ export const pagePt: typeof pageEn = {
   errorTitle: "Algo deu errado",
   errorFallback: "Ocorreu um erro inesperado. Por favor, recarregue a página.",
   legalTitle: "Termos, privacidade e riscos",
-  legalIntro: "A Global Beldex é uma plataforma de trading e investimento profissional. Fornecemos carteiras seguras, execução em tempo real e ferramentas gráficas de nível institucional.",
+  legalIntro: "A Global Shares Earn é uma plataforma de trading e investimento profissional. Fornecemos carteiras seguras, execução em tempo real e ferramentas gráficas de nível institucional.",
   legalBack: "Voltar à plataforma",
   legalTerms: [
     "Você pode abrir uma conta, depositar fundos a partir de $300, realizar swaps entre USD e BDX, e fazer staking de ativos nos planos GNS e Falcon.",
@@ -552,7 +552,7 @@ export const pagePt: typeof pageEn = {
     "Certifique-se de compreender totalmente os riscos antes de negociar. Nada nesta plataforma constitui aconselhamento financeiro ou fiscal.",
   ],
   faqs: [
-    { q: "Isto é uma corretora de verdade?", a: "Sim. A GLOBAL BELDEX é uma plataforma de investimento profissional. Saldos, depósitos e planos são processados em tempo real." },
+    { q: "Isto é uma corretora de verdade?", a: "Sim. A GLOBAL SHARES EARN é uma plataforma de investimento profissional. Saldos, depósitos e planos são processados em tempo real." },
     { q: "Qual é o depósito mínimo?", a: "É exigido um depósito mínimo de $300 para ativar a conta e acessar os planos de investimento." },
     { q: "Como os planos funcionam?", a: "Cada plano bloqueia um valor por um prazo fixo e gera lucro diário. No fim do prazo, o principal e o lucro retornam ao saldo disponível." },
     { q: "De onde vêm os dados de mercado?", a: "Fita, visão geral e gráficos são widgets oficiais da TradingView para CRYPTO:BDXUSD com precificação de liquidez de nível 1." },
@@ -564,10 +564,10 @@ export const pageNl: typeof pageEn = {
   heroTitle: "Vermogen opbouwen met visie.",
   heroSub: "Investeren in morgen, vandaag.",
   heroLead:
-    "Global Beldex laat je professioneel beleggen in CFD’s op forex, BDX, crypto en indices. Geavanceerde tools, persoonlijke support en sterke beveiliging, voor zowel beginners als ervaren beleggers.",
+    "Global Shares Earn laat je professioneel beleggen in CFD’s op forex, BDX, crypto en indices. Geavanceerde tools, persoonlijke support en sterke beveiliging, voor zowel beginners als ervaren beleggers.",
   registerNow: "Nu registreren",
   conditionsCharges: "Voorwaarden en kosten",
-  platformsLead: "Bij GLOBAL BELDEX bieden we platforms voor beleggers van elk niveau.",
+  platformsLead: "Bij GLOBAL SHARES EARN bieden we platforms voor beleggers van elk niveau.",
   goodCompany: "Je bent in goed gezelschap",
   companyCards: [
     { title: "Beginners", body: "Open een account, volg de live Beldex-prijs en kies het plan dat bij je kapitaal past." },
@@ -606,7 +606,7 @@ export const pageNl: typeof pageEn = {
   step3t: "Activeer een plan",
   step3d: "Zet fondsen vast in plannen van GNS tot Falcon. Dagelijkse winst wordt bijgeschreven tot het einde van de termijn.",
   plansBoard: "GNS begint bij 4.000 BDX. Van Build Up tot Falcon gelden dezelfde premium voorwaarden in het account.",
-  footerEdu: "© GLOBAL BELDEX — Live marktgegevens geleverd door TradingView.",
+  footerEdu: "© GLOBAL SHARES EARN — Live marktgegevens geleverd door TradingView.",
   createToInvest: "Maak een account om te beleggen",
   accountOverview: "Accountoverzicht",
   liveDot: "Live · TradingView",
@@ -645,7 +645,7 @@ export const pageNl: typeof pageEn = {
   errorTitle: "Er ging iets mis",
   errorFallback: "Er is een onverwachte fout opgetreden. Laad de pagina opnieuw.",
   legalTitle: "Voorwaarden, privacy en risico",
-  legalIntro: "Global Beldex is een professioneel handels- en investeringsplatform. Wij bieden zwaar beveiligde wallets, realtime uitvoering en institutionele grafische tools.",
+  legalIntro: "Global Shares Earn is een professioneel handels- en investeringsplatform. Wij bieden zwaar beveiligde wallets, realtime uitvoering en institutionele grafische tools.",
   legalBack: "Terug naar het platform",
   legalTerms: [
     "Je kunt een account openen, fondsen storten vanaf $300, swappen tussen USD en BDX, en vermogen vastzetten in onze GNS- en Falcon-plannen.",
@@ -662,7 +662,7 @@ export const pageNl: typeof pageEn = {
     "Zorg ervoor dat je de risico's volledig begrijpt voordat je gaat handelen. De informatie op dit platform is geen financieel of fiscaal advies.",
   ],
   faqs: [
-    { q: "Is dit een echte broker?", a: "Ja. GLOBAL BELDEX is een professioneel investeringsplatform met realtime grafieken. Saldi, stortingen en plannen worden live verwerkt." },
+    { q: "Is dit een echte broker?", a: "Ja. GLOBAL SHARES EARN is een professioneel investeringsplatform met realtime grafieken. Saldi, stortingen en plannen worden live verwerkt." },
     { q: "Wat is de minimale storting?", a: "Er is een minimale storting van $300 vereist om je account te activeren en toegang te krijgen tot de investeringsplannen." },
     { q: "Hoe werken de plannen?", a: "Elk plan zet je fondsen vast voor een bepaalde duur en genereert dagelijkse winst. Aan het einde worden je inleg en winst teruggestort naar je beschikbare saldo." },
     { q: "Waar komen de marktgegevens vandaan?", a: "Ticker, overzicht en grafieken zijn officiële widgets van TradingView voor CRYPTO:BDXUSD met tier-1 liquiditeitsprijzen." },

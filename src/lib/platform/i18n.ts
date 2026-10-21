@@ -16,7 +16,7 @@ export const LANGS: { id: Lang; label: string; short: string }[] = [
 ];
 
 const en = {
-  brand: "GLOBAL BELDEX",
+  brand: "GLOBAL SHARES EARN",
   tag: "Advanced Investment Platform",
   signIn: "Sign In",
   openAccount: "Open Account",
@@ -44,7 +44,7 @@ const en = {
   logout: "Logout",
   available: "Available Balance",
   locked: "Locked Balance",
-  welcome: "Welcome to GLOBAL BELDEX",
+  welcome: "Welcome to GLOBAL SHARES EARN",
   welcomeBody:
     "Your advanced investment dashboard is ready. Live BDXUSD market now active.",
   others: "Others",
@@ -196,7 +196,7 @@ const en = {
   session: "Session",
   sessionBody: "Manage active devices",
   marketData: "Market data",
-  supportLead: "GLOBAL BELDEX provides advanced investment tools. Market data provided by TradingView.",
+  supportLead: "GLOBAL SHARES EARN provides advanced investment tools. Market data provided by TradingView.",
   supportEmail: "Email support",
   supportPhone: "Mobile",
   supportAddress: "Address",
@@ -303,7 +303,7 @@ const en = {
 };
 
 const es: typeof en = {
-  brand: "GLOBAL BELDEX",
+  brand: "GLOBAL SHARES EARN",
   tag: "Plataforma de inversión avanzada",
   signIn: "Iniciar sesión",
   openAccount: "Abrir cuenta",
@@ -331,7 +331,7 @@ const es: typeof en = {
   logout: "Salir",
   available: "Saldo disponible",
   locked: "Saldo bloqueado",
-  welcome: "Bienvenido a GLOBAL BELDEX",
+  welcome: "Bienvenido a GLOBAL SHARES EARN",
   welcomeBody:
     "Tu panel de inversión avanzado está listo. Mercado BDXUSD en vivo activo.",
   others: "Otros",
@@ -484,7 +484,7 @@ const es: typeof en = {
   session: "Sesión",
   sessionBody: "Gestiona dispositivos activos",
   marketData: "Datos de mercado",
-  supportLead: "GLOBAL BELDEX ofrece herramientas de inversión avanzadas. Datos de mercado por TradingView.",
+  supportLead: "GLOBAL SHARES EARN ofrece herramientas de inversión avanzadas. Datos de mercado por TradingView.",
   supportEmail: "Correo de soporte",
   supportPhone: "Móvil",
   supportAddress: "Dirección",
