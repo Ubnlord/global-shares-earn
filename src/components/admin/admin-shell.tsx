@@ -75,7 +75,7 @@ export function AdminShell({ children, activeSection = "dashboard", onSectionCha
               <div className="flex items-center gap-2.5 lg:hidden">
                 <Mark className="size-8" />
                 <div>
-                  <div className="text-sm font-bold tracking-tight">GLOBAL BELDEX</div>
+                  <div className="text-sm font-bold tracking-tight">GLOBAL SHARES EARN</div>
                   <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#28e6d0]">Admin Console</div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ function AdminBrand({ compact = false }: { compact?: boolean }) {
       <div className="flex items-center gap-3">
         <Mark className="size-10" />
         <div>
-          <div className="font-bold tracking-tight text-white">GLOBAL BELDEX</div>
+          <div className="font-bold tracking-tight text-white">GLOBAL SHARES EARN</div>
           <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#28e6d0]">Administrator</div>
         </div>
       </div>

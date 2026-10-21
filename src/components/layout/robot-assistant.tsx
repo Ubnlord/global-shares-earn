@@ -34,7 +34,7 @@ function getReply(message: string) {
     return "For account-specific help, open Menu → Support and send us a message. Please never share your password, verification code, or private keys.";
   }
   if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
-    return "Hello! 👋 I'm the Global Beldex Assistant. Ask me about deposits, withdrawals, plans, daily interest, or support.";
+    return "Hello! 👋 I'm the Global Shares Earn Assistant. Ask me about deposits, withdrawals, plans, daily interest, or support.";
   }
 
   return "I can help with deposits, withdrawals, investment plans, daily interest, and support. Choose a question below or type your own.";
@@ -62,7 +62,7 @@ export function RobotAssistant() {
       from: "bot",
       text: user?.username
         ? `Welcome back, ${user.username}! 👋 How can I assist you today?`
-        : "Welcome to GLOBAL BELDEX! 👋 How can I assist you today?",
+        : "Welcome to GLOBAL SHARES EARN! 👋 How can I assist you today?",
     },
   ]);
 
@@ -86,7 +86,7 @@ export function RobotAssistant() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open Global Beldex Assistant"
+          aria-label="Open Global Shares Earn Assistant"
           className={`fixed bottom-[88px] right-4 z-[70] flex size-14 items-center justify-center rounded-full border border-red-300/50 bg-red-600 text-white shadow-2xl shadow-black/30 transition hover:scale-105 active:scale-95 ${pulse ? "animate-bounce" : ""}`}
         >
           <span className="relative">
@@ -110,7 +110,7 @@ export function RobotAssistant() {
                 <Bot size={23} />
               </div>
               <div className="min-w-0">
-                <div className="truncate text-sm font-bold">GLOBAL BELDEX Assistant</div>
+                <div className="truncate text-sm font-bold">GLOBAL SHARES EARN Assistant</div>
                 <div className="flex items-center gap-1.5 text-[10px] opacity-90">
                   <span className="size-1.5 rounded-full bg-white" />
                   {statusText}
@@ -181,7 +181,7 @@ export function RobotAssistant() {
                   if (event.key === "Enter") send();
                 }}
                 placeholder="Type your message here"
-                aria-label="Message Global Beldex Assistant"
+                aria-label="Message Global Shares Earn Assistant"
                 className="min-w-0 flex-1 bg-transparent py-2 text-sm text-fg outline-none placeholder:text-muted"
               />
               <button

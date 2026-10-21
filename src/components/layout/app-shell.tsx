@@ -177,7 +177,7 @@ export function AppShell() {
             aria-hidden="true"
           />
           <div className="animate-pulse text-base font-semibold tracking-wide">
-            Loading Global Beldex<span className="inline-block animate-bounce">...</span>
+            Loading Global Shares Earn<span className="inline-block animate-bounce">...</span>
           </div>
         </div>
       </div>
