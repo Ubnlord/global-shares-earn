@@ -29,6 +29,9 @@ function Dashboard() {
   const user = usePlatform((s) => s.user);
   const available = usePlatform((s) => s.available);
   const locked = usePlatform((s) => s.locked);
+  const profit = usePlatform((s) => s.profit);
+  const bonus = usePlatform((s) => s.bonus);
+  const referralBonus = usePlatform((s) => s.referralBonus);
   const txs = usePlatform((s) => s.txs);
   const plans = usePlatform((s) => s.plans);
   const accrualFailed = usePlatform((s) => s.accrualFailed);
@@ -38,7 +41,7 @@ function Dashboard() {
   const lang = usePlatform((s) => s.lang);
   const t = copy[lang];
   const active = plans.filter((p) => p.status === "active");
-  const accrued = active.reduce((total, plan) => total + accruedProfit(plan), 0);
+
 
 
   return (
@@ -74,10 +77,10 @@ function Dashboard() {
           <div className="mt-1 text-[10px] text-subtle">Available balance · USD</div>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-3">
-        <Stat icon={TrendingUp} label="Accrued investment profit" value={formatUsd(accrued)} tone="text-accent" />
+        <Stat icon={TrendingUp} label="Investment interest credited" value={formatUsd(profit)} tone="text-accent" />
+        <Stat icon={Gift} label="Welcome bonuses credited" value={formatUsd(bonus)} tone="text-amber-400" />
+        <Stat icon={UsersRound} label="Referral rewards" value={formatUsd(referralBonus)} tone="text-accent" />
         <Stat icon={Wallet} label="Invested / locked" value={formatUsd(locked)} tone="text-accent" />
-        <Stat icon={Gift} label="Active investment plans" value={String(active.length)} tone="text-amber-400" />
-        <Stat icon={UsersRound} label="Transaction records" value={String(txs.length)} tone="text-accent" />
       </div>
       <Button className="mt-5 w-full" onClick={() => navigate({ to: "/app/deposit" })}><ArrowDownToLine size={16} /> {t.investNow}</Button>
         <Button className="mt-3 w-full bg-green-500 text-white hover:bg-green-400" onClick={() => navigate({ to: "/app/plans" })}><TrendingUp size={16} /> {t.buyPlan}</Button>
