@@ -24,6 +24,7 @@ function Landing() {
   const t = copy[lang];
   const cards = t.page.companyCards;
   const [company, setCompany] = useState(0);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
   const card = cards[company] ?? cards[0];
 
   const stepCompany = (dir: number) => {
@@ -136,14 +137,14 @@ function Landing() {
 
 
 
-      {/* Testimonials supplied by the site owner for publication. */}
+      {/* Client testimonial carousel styled to match the supplied reference. */}
       <section className="mt-16" aria-labelledby="testimonials-heading">
         <div className="text-center">
-          <div className="text-xs font-semibold tracking-widest text-accent">CUSTOMER STORIES</div>
-          <h2 id="testimonials-heading" className="mt-2 text-[28px] font-bold">What Our Clients Say</h2>
+          <div className="text-xs font-semibold tracking-widest text-accent">CLIENT STORIES</div>
+          <h2 id="testimonials-heading" className="mt-2 text-[28px] font-bold">You're In Good Company!</h2>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {[
+        {(() => {
+          const testimonials = [
             {
               image: "steven-tacconi.jpg",
               name: "STEVEN TACCONI",
@@ -169,22 +170,31 @@ function Landing() {
               name: "TED & SHANNON",
               quote: "I absolutely love your service. I don’t know how you do it, but I am very, very happy that I found you, and I can’t thank you enough for helping me to realize my dream of achieving a supplemental income to my Administrative business, which I have been able to skyrocket to another level with the extra money I make by Investing with Global Shares Earn.",
             },
-          ].map((person) => (
-            <article key={person.name} className="rounded-xl border border-line bg-surface p-5 sm:p-6">
-              <div className="flex items-center gap-3">
+          ];
+          const person = testimonials[testimonialIndex] ?? testimonials[0];
+          const step = (direction: number) => setTestimonialIndex((index) => (index + direction + testimonials.length) % testimonials.length);
+          return (
+            <div className="relative mx-auto mt-8 max-w-[760px]">
+              <button type="button" aria-label="Previous testimonial" onClick={() => step(-1)} className="absolute left-0 top-1/2 z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface text-fg shadow-sm hover:text-accent sm:left-0 sm:-translate-x-1/2">‹</button>
+              <article className="rounded-2xl border border-line bg-surface px-6 py-8 text-center sm:px-10 sm:py-10">
                 <img
                   src={`${import.meta.env.BASE_URL}testimonials/${person.image}`}
                   alt={person.name}
                   loading="lazy"
-                  className="h-14 w-14 shrink-0 rounded-full border border-line object-cover"
+                  className="mx-auto h-36 w-36 rounded-2xl border border-line object-cover sm:h-44 sm:w-44"
                 />
-                <div className="text-sm font-bold tracking-wide text-fg">{person.name}</div>
+                <blockquote className="mt-5 text-sm leading-7 text-subtle sm:text-base">“{person.quote}”</blockquote>
+                <div className="mt-5 text-xs font-bold italic tracking-wider text-subtle">{person.name}</div>
+              </article>
+              <button type="button" aria-label="Next testimonial" onClick={() => step(1)} className="absolute right-0 top-1/2 z-10 flex h-9 w-9 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface text-fg shadow-sm hover:text-accent sm:right-0 sm:translate-x-1/2">›</button>
+              <div className="mt-4 flex justify-center gap-2" aria-label="Choose testimonial">
+                {testimonials.map((item, index) => (
+                  <button key={item.name} type="button" aria-label={`Show testimonial from ${item.name}`} aria-current={index === testimonialIndex ? "true" : undefined} onClick={() => setTestimonialIndex(index)} className={`h-2 w-2 rounded-full transition-colors ${index === testimonialIndex ? "bg-accent" : "bg-line"}`} />
+                ))}
               </div>
-              <div className="mt-4 text-2xl leading-none text-accent" aria-hidden="true">“</div>
-              <blockquote className="text-sm leading-6 text-subtle">{person.quote}</blockquote>
-            </article>
-          ))}
-        </div>
+            </div>
+          );
+        })()}
       </section>
 
       <section className="mt-16" aria-labelledby="awards-heading">
@@ -194,20 +204,20 @@ function Landing() {
         </div>
         <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[
-            { image: "award-1.jpg", label: "Award image 1" },
-            { image: "award-2.jpg", label: "Award image 2" },
-            { image: "award-3.jpg", label: "Award image 3" },
-            { image: "award-4.jpg", label: "Award image 4" },
+            { image: "award-1.jpg", label: "Best Mobile Trading Platform UAE 2022" },
+            { image: "award-2.jpg", label: "Most Trusted Trading Platform Europe 2022" },
+            { image: "award-3.jpg", label: "Most Innovative CFD Broker" },
+            { image: "award-4.jpg", label: "Best Fixed Spread Broker" },
           ].map((award) => (
             <figure key={award.image} className="overflow-hidden rounded-xl border border-line bg-surface p-3">
               <img
                 src={`${import.meta.env.BASE_URL}awards/${award.image}`}
                 alt={award.label}
                 loading="lazy"
-                className="aspect-[4/3] w-full rounded-lg object-contain"
+                className="aspect-[4/3] w-full rounded-lg bg-white object-contain"
               />
-              <figcaption className="mt-3 text-center text-xs leading-5 text-subtle">
-                Recognition material — details pending verification
+              <figcaption className="mt-3 text-center text-xs font-semibold leading-5 text-fg">
+                {award.label}
               </figcaption>
             </figure>
           ))}
