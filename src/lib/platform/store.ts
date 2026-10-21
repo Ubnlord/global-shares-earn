@@ -119,8 +119,8 @@ type PlatformState = {
   setUserProfile: (user: User | CloudProfile) => void;
   logout: () => void;
   updateProfile: (patch: Partial<User>) => void;
-  deposit: (amount: number, method: string, requestId?: string, currency?: "BDX" | "USD") => Promise<string | null>;
-  withdraw: (amount: number, method: string, address: string, requestId?: string, currency?: "BDX" | "USD") => Promise<string | null>;
+  deposit: (amount: number, method: string, requestId?: string, currency?: "USD") => Promise<string | null>;
+  withdraw: (amount: number, method: string, address: string, requestId?: string, currency?: "USD") => Promise<string | null>;
   buyPlan: (plan: Plan, amount: number) => Promise<string | null>;
   settlePlans: () => Promise<void>;
   copyReferral: () => string;
@@ -244,6 +244,7 @@ export const usePlatform = create<PlatformState>()(
 
         deposit: async (amount, method, requestId, currency) => {
           const ledgerCurrency = "USD";
+          if (!["BITCOIN", "ETHEREUM"].includes(method.toUpperCase())) return "UNSUPPORTED_PAYMENT_METHOD";
           if (currency && currency !== "USD") return "PAYMENT_METHOD_CURRENCY_MISMATCH";
           const ledgerAmount = amount;
           const minimum = 300;
@@ -267,6 +268,7 @@ export const usePlatform = create<PlatformState>()(
           if (addressError) return addressError;
           if (!amount || amount <= 0) return "NEED_AMOUNT";
           const ledgerCurrency = "USD";
+          if (!["BITCOIN", "ETHEREUM"].includes(method.toUpperCase())) return "UNSUPPORTED_PAYMENT_METHOD";
           if (currency && currency !== "USD") return "PAYMENT_METHOD_CURRENCY_MISMATCH";
           const minimum = 300;
           if (amount < minimum) return "MIN_WITHDRAWAL";
