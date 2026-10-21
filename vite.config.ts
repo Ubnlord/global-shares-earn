@@ -8,6 +8,8 @@ import { appEnvPlugin } from "./scripts/app-env-plugin.mjs";
 
 // `0.0.0.0:8080` is the live-preview contract — don't change host/port.
 export default defineConfig({
+  // GitHub Pages serves this repository under /global-shares-earn/.
+  base: "/global-shares-earn/",
   server: {
     host: "0.0.0.0",
     port: 8080,
