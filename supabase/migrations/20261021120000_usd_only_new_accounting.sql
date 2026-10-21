@@ -131,4 +131,19 @@ grant execute on function public.buy_investment_plan(text,numeric) to authentica
 
 -- Existing BDX rows are retained unchanged for auditability; this migration does
 -- not exchange, erase, merge, or reinterpret any pre-existing customer balance.
+-- Versioned USD-only entry point lets the frontend fail closed until this
+-- migration is installed, instead of accidentally invoking the old BDX RPC.
+create or replace function public.buy_investment_plan_usd(p_plan_id text,p_amount numeric)
+returns public.user_investment
+language plpgsql
+security definer
+set search_path = pg_catalog, public, pg_temp
+as $function$
+begin
+  return public.buy_investment_plan(p_plan_id,p_amount);
+end;
+$function$;
+revoke all on function public.buy_investment_plan_usd(text,numeric) from public, anon;
+grant execute on function public.buy_investment_plan_usd(text,numeric) to authenticated;
+
 commit;
