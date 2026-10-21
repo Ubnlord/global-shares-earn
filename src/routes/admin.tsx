@@ -153,7 +153,7 @@ export function AdminPage({ initialTab = "dashboard", transactionType }: { initi
   const [showUserPanel, setShowUserPanel] = useState(false);
 
   const hasPermission = (permission: string) =>
-    permissions.length === 0 || permissions.includes("*") || permissions.includes(permission);
+    permissions.includes("*") || permissions.includes(permission);
 
   // Keep the UI permission model aligned with the backend's actual admin
   // permission names. Approval/rejection permissions are authoritative for
