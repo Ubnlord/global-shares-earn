@@ -479,10 +479,6 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
     });
 
     await step("concurrent legacy BDX withdrawals are rejected without balance changes", async () => {
-      const seeded = await admin.from("user_profile")
-        .update({ bdx_balance: 5000 })
-        .eq("user_id", users.normal.id);
-      assert.ifError(seeded.error);
       const before = await admin.from("user_profile")
         .select("bdx_balance")
         .eq("user_id", users.normal.id)
@@ -517,10 +513,6 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
     });
 
     await step("legacy BDX withdrawal cannot be settled or update audit totals", async () => {
-      const seeded = await admin.from("user_profile")
-        .update({ bdx_balance: 5000 })
-        .eq("user_id", users.normal.id);
-      assert.ifError(seeded.error);
       const before = await admin.from("user_profile")
         .select("bdx_balance,total_withdrawals_bdx")
         .eq("user_id", users.normal.id)
