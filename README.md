@@ -1,13 +1,13 @@
-# Global Beldex
+# GLOBAL SHARES EARN
 
-Production website: https://global-beldex.com
+**Planned domain:** https://globalsharesearn.com (registration and DNS setup pending)
 
-Global Beldex is a production web application with authenticated user accounts, deposits, withdrawals, transaction history, market data, and protected administrative financial workflows.
+GLOBAL SHARES EARN is being prepared as a web application with account access, a BDX-denominated wallet, investment plans, deposits, withdrawals, transaction history, and protected administrative workflows.
 
-## Security
+## Deployment
 
-The repository includes automated secret scanning, build verification, database safeguards, and reproducible Supabase security regression tests.
+The project is configured for GitHub Pages. The existing custom domain remains in place until the new domain is registered and DNS/HTTPS are ready, so the current site is not disconnected prematurely.
 
-## Production status
+## Security and release checks
 
-The current `main` branch is deployed through GitHub Pages.
+The repository includes workflows for deployment, secret scanning, financial safeguards, and security build verification. Financial changes must pass the relevant checks before release.
