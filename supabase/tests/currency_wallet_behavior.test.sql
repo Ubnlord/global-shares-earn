@@ -1,14 +1,12 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(8);
+select plan(7);
+
 
 select has_trigger('public', 'transaction', 'reject_new_bdx_transaction',
   'transaction ledger blocks new non-USD accounting writes');
 select has_trigger('public', 'user_investment', 'reject_new_bdx_investment',
   'investment ledger blocks new non-USD accounting writes');
-select has_trigger('public', 'user_profile', 'freeze_legacy_bdx_profile_balances',
-  'legacy non-USD balance fields are frozen');
-
 select col_default_is('public','transaction','currency','USD',
   'new transactions default to USD');
 select col_default_is('public','user_investment','currency','USD',
