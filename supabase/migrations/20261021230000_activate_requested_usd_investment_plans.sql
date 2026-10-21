@@ -1,22 +1,12 @@
 begin;
 
 -- Configure the seven requested plan terms in the existing catalog.
--- Target-return plans use a per-day rate equal to 10% divided by term length,
--- so their total scheduled return is 10% across the full term, not 10% per day.
--- Daily-profit plans use the explicitly requested daily percentages.
--- No existing user investments or balances are rewritten.
+-- Keep legacy primary keys intact so existing investment foreign keys remain valid.
+-- Target-return plans use a per-day rate equal to 10% divided by term length.
+-- Daily-profit plans use the requested daily percentages.
+-- Existing user investments and balances are not rewritten.
 update public.investment_plan_catalog
-set id = case id
-  when 'gns' then 'capital-preservation'
-  when 'build' then 'fixed-income'
-  when 'follow' then 'balanced-portfolio'
-  when 'apex' then 'global-index'
-  when 'edifex' then 'sustainable-growth'
-  when 'dixon' then 'technology-growth'
-  when 'falcon' then 'project-target'
-  else id
-end,
-name = case id
+set name = case id
   when 'gns' then 'Capital Preservation Plan'
   when 'build' then 'Fixed Income Plan'
   when 'follow' then 'Balanced Portfolio'
@@ -66,7 +56,7 @@ daily_rate = case id
   when 'falcon' then 0.10 / 1825.0
   else daily_rate
 end,
-active = case when id in ('gns','build','follow','apex','edifex','dixon','falcon') then true else active end,
+active = true,
 updated_at = now()
 where id in ('gns','build','follow','apex','edifex','dixon','falcon');
 
