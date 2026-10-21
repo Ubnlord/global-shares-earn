@@ -47,7 +47,7 @@ const CONFIG: Record<
     height: 400,
     payload: {
       autosize: true,
-      symbol: "CRYPTO:BDXUSD",
+      symbol: "BINANCE:BTCUSDT",
       interval: "D",
       timezone: "Etc/UTC",
       theme: "dark",
@@ -108,7 +108,7 @@ function Fallback({ kind }: { kind: WidgetKind }) {
   }
   return (
     <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-2 px-4 text-center">
-      <div className="text-sm font-semibold text-fg">"Live crypto market"</div>
+      <div className="text-sm font-semibold text-fg">Live crypto market</div>
       <p className="text-xs text-subtle max-w-xs">{p.chartFallback}</p>
       <a
         href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
