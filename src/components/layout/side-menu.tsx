@@ -66,7 +66,7 @@ export function SideMenu({ open, onClose }: { open: boolean; onClose: () => void
             <p className="text-[10px] font-semibold tracking-widest text-subtle">{t.liveMarket}</p>
             <div className="mt-2 rounded-md border border-line bg-elevated p-3">
               <a
-                href="https://www.tradingview.com/symbols/BDXUSD/"
+                href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold text-fg hover:text-accent"
