@@ -6,11 +6,15 @@ import { cn } from "@/lib/utils";
 
 export function Mark({ className }: { className?: string }) {
   return (
-    <img
-      src="/brand-logo.png"
-      alt="GLOBAL SHARES EARN"
-      className={cn("size-8 shrink-0 object-contain", className)}
-    />
+    <div
+      aria-hidden="true"
+      className={cn(
+        "flex size-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300/40 bg-gradient-to-br from-emerald-300 to-emerald-600 text-[11px] font-black tracking-tight text-[#062018] shadow-sm",
+        className,
+      )}
+    >
+      GS
+    </div>
   );
 }
 
