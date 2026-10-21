@@ -80,7 +80,7 @@ function AdminLogin() {
         <div className="mb-7 flex items-center gap-3">
           <Mark className="size-10" />
           <div>
-            <div className="font-bold leading-none text-fg">GLOBAL BELDEX</div>
+            <div className="font-bold leading-none text-fg">GLOBAL SHARES EARN</div>
             <div className="mt-1 flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-accent">
               <ShieldCheck size={12} /> Administrator Portal
             </div>
@@ -90,7 +90,7 @@ function AdminLogin() {
         <div className="mb-6 rounded-xl border border-accent/20 bg-accent/5 p-4">
           <div className="text-sm font-semibold text-fg">Secure administrator sign in</div>
           <div className="mt-1 text-xs leading-5 text-muted">
-            This portal is restricted to accounts listed in the Global Beldex administrator registry.
+            This portal is restricted to accounts listed in the Global Shares Earn administrator registry.
           </div>
         </div>
 
