@@ -5,13 +5,14 @@ import { Mark } from "@/components/brand/logo";
 import { signOutCloud } from "@/lib/supabase/auth";
 import { usePlatform } from "@/lib/platform/store";
 
-type AdminSection = "dashboard" | "transactions" | "users" | "investments" | "kyc" | "reconciliation" | "audit" | "settings";
+type AdminSection = "dashboard" | "transactions" | "users" | "investments" | "plans" | "kyc" | "reconciliation" | "audit" | "settings";
 
 const navItems: { to: "/admin"; section: AdminSection; label: string; icon: typeof LayoutDashboard }[] = [
   { to: "/admin", section: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin", section: "transactions", label: "Transactions", icon: Wallet },
   { to: "/admin", section: "users", label: "Users", icon: Users },
   { to: "/admin", section: "investments", label: "Investments", icon: TrendingUp },
+  { to: "/admin", section: "plans", label: "Investment Plans", icon: TrendingUp },
   { to: "/admin", section: "kyc", label: "KYC Review", icon: FileCheck2 },
   { to: "/admin", section: "reconciliation", label: "Reconciliation", icon: ClipboardCheck },
   { to: "/admin", section: "audit", label: "Audit Log", icon: ReceiptText },
