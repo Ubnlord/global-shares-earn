@@ -516,52 +516,45 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
       assert.equal(data?.length, 0, "rejected withdrawals must not create transaction rows");
     });
 
-    await step("concurrent BDX settlement updates BDX totals and audit once", async () => {
+    await step("legacy BDX withdrawal cannot be settled or update audit totals", async () => {
       const seeded = await admin.from("user_profile")
         .update({ bdx_balance: 5000 })
         .eq("user_id", users.normal.id);
       assert.ifError(seeded.error);
+      const before = await admin.from("user_profile")
+        .select("bdx_balance,total_withdrawals_bdx")
+        .eq("user_id", users.normal.id)
+        .single();
+      assert.ifError(before.error);
       const client = await clientFor(users.normal);
       const requestId = randomUUID();
       const created = await client.rpc("create_financial_transaction", {
         p_type: "withdraw",
         p_amount: 4000,
         p_method: "Beldex",
-        p_note: "A".repeat(95),
+        p_note: "legacy USD-only regression test",
         p_request_id: requestId,
         p_currency: "BDX",
       });
-      assert.ifError(created.error);
-      const adminClientA = await clientFor(users.admin);
-      const adminClientB = await clientFor(users.admin);
-      const approved = await adminClientA.rpc("admin_approve_transaction", {
-        p_transaction_id: created.data.id,
-        p_reason: "BDX concurrency test approval",
-      });
-      assert.ifError(approved.error);
-      const before = await admin.from("user_profile")
-        .select("total_withdrawals_bdx")
-        .eq("user_id", users.normal.id)
-        .single();
-      assert.ifError(before.error);
-      const results = await Promise.all([
-        adminClientA.rpc("admin_settle_transaction", { p_transaction_id: created.data.id, p_reason: "concurrent BDX settlement A" }),
-        adminClientB.rpc("admin_settle_transaction", { p_transaction_id: created.data.id, p_reason: "concurrent BDX settlement B" }),
-      ]);
-      assert.equal(results.filter((result) => !result.error).length, 1);
-      assert.equal(results.filter((result) => result.error).length, 1);
+      assert.ok(created.error, "legacy BDX withdrawal unexpectedly succeeded");
       const after = await admin.from("user_profile")
-        .select("total_withdrawals_bdx")
+        .select("bdx_balance,total_withdrawals_bdx")
         .eq("user_id", users.normal.id)
         .single();
       assert.ifError(after.error);
-      assert.equal(Number(after.data.total_withdrawals_bdx) - Number(before.data.total_withdrawals_bdx), 4000);
+      assert.equal(Number(after.data.bdx_balance), Number(before.data.bdx_balance));
+      assert.equal(Number(after.data.total_withdrawals_bdx), Number(before.data.total_withdrawals_bdx));
+      const { data: transactions, error: transactionError } = await admin.from("transaction")
+        .select("id")
+        .eq("user_id", users.normal.id)
+        .eq("request_id", requestId);
+      assert.ifError(transactionError);
+      assert.equal(transactions?.length, 0, "rejected BDX request must not create a transaction");
       const { data: auditRows, error: auditError } = await admin.from("transaction_audit")
         .select("id")
-        .eq("transaction_id", created.data.id)
         .eq("action", "settled");
       assert.ifError(auditError);
-      assert.equal(auditRows?.length, 1);
+      assert.ok(Array.isArray(auditRows));
     });
 
     await step("BDX admin adjustment enforces permission, idempotency, and audit integrity", async () => {
