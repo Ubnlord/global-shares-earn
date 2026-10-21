@@ -8,8 +8,7 @@ function RetiredSwapPage() {
       <section className="rounded-xl border border-line bg-elevated p-5">
         <h2 className="text-xl font-bold text-fg">Currency swaps are retired</h2>
         <p className="mt-2 text-sm leading-6 text-subtle">
-          BDX wallet balances and historical USD records are kept separate. This page no longer
-          converts or transfers value between currencies.
+          Currency conversion has been retired. Account balances, investments, deposits, and withdrawals are denominated in USD.
         </p>
       </section>
     </div>
