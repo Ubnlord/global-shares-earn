@@ -7,8 +7,6 @@ const requiredBalanceFields = [
   "available_balance",
   "locked_balance",
   "total_withdrawals",
-  "bdx_balance",
-  "referral_earnings",
 ] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -30,9 +28,13 @@ function isArrayData(value: unknown): value is unknown[] {
 
 /**
  * A cloud book is safe to hydrate only when every required query completed
- * without error, the profile exists with all required numeric balance fields,
+ * without error, the profile exists with all required USD balance fields,
  * and both ledgers are actual arrays. Empty arrays are valid; missing/null
  * data is not, because it must never be mistaken for an empty financial ledger.
+ *
+ * Legacy currency fields are intentionally not required here: archived
+ * transactions and investments retain their own currency metadata, while
+ * current profile balances are read only from USD account fields.
  */
 export function isCompleteCloudRefresh(
   profileResult: QueryResult,
