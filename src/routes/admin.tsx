@@ -571,10 +571,10 @@ export function AdminPage({ initialTab = "dashboard", transactionType }: { initi
               {tab === "plans" && (
                 <div className="p-4 sm:p-5">
                   <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
-                    <div className="font-semibold text-fg">Investment plan catalog · review required</div>
+                    <div className="font-semibold text-fg">Investment plan catalog · live configuration</div>
                     <p className="mt-1 text-sm text-muted">
-                      These are the requested GSE plan definitions. Return terms are not verified, so new purchases remain disabled.
-                      This screen is read-only; it does not change production plan terms or existing investments.
+                      This view shows the requested plan definitions from the website catalog. Availability here reflects the frontend configuration;
+                      database purchase eligibility is enforced separately by Supabase. Plan editing is not enabled until a protected, audited admin operation is available.
                     </p>
                   </div>
                   <div className="overflow-x-auto rounded-xl border border-line">
@@ -595,13 +595,13 @@ export function AdminPage({ initialTab = "dashboard", transactionType }: { initi
                             <td className="p-3 text-fg">${plan.min.toLocaleString()} – ${plan.max.replace(/ USD$/i, "")}</td>
                             <td className="p-3 text-fg">{plan.duration}</td>
                             <td className="p-3 text-muted">{plan.profit}</td>
-                            <td className="p-3"><span className="rounded-full border border-amber-500/30 px-2 py-1 text-xs text-amber-300">Disabled pending review</span></td>
+                            <td className="p-3"><span className={plan.available ? "rounded-full border border-emerald-500/30 px-2 py-1 text-xs text-emerald-300" : "rounded-full border border-amber-500/30 px-2 py-1 text-xs text-amber-300"}>{plan.available ? "Configured available" : "Disabled"}</span></td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
-                  <p className="mt-3 text-xs text-muted">Next required step: persist approved plan terms through a protected database operation with administrator authorization and an audit record.</p>
+                  <p className="mt-3 text-xs text-muted">Plan changes remain read-only here until a dedicated database operation enforces administrator permissions, validates terms, preserves existing investment terms, and writes an audit record.</p>
                 </div>
               )}
 
