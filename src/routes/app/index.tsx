@@ -24,14 +24,13 @@ import {
   referralLink,
   usePlatform,
 } from "@/lib/platform/store";
-import { formatBdx, formatUsd, copyText } from "@/lib/utils";
+import { formatUsd, copyText } from "@/lib/utils";
 export const Route = createFileRoute("/app/")({ component: Dashboard });
 
 function Dashboard() {
   const navigate = useNavigate();
   const user = usePlatform((s) => s.user);
   const available = usePlatform((s) => s.available);
-  const bdx = usePlatform((s) => s.bdx);
   const locked = usePlatform((s) => s.locked);
   const txs = usePlatform((s) => s.txs);
   const plans = usePlatform((s) => s.plans);
@@ -42,10 +41,7 @@ function Dashboard() {
   const lang = usePlatform((s) => s.lang);
   const t = copy[lang];
   const active = plans.filter((p) => p.status === "active");
-  const bdxProfit = plans.reduce((sum, p) => sum + (p.currency === "BDX" ? (p.creditedProfit ?? 0) : 0), 0);
-  const bdxBonus = txs.filter((tx) => tx.type === "bonus" && tx.currency === "BDX" && tx.status === "completed" && tx.method !== "Admin daily investment profit" && tx.note !== "Server-side investment profit" && tx.method !== "Admin investment principal release" && tx.method !== "Admin BDX adjustment").reduce((sum, tx) => sum + tx.amount, 0);
-  const bdxReferralBonus = txs.filter((tx) => tx.type === "referral" && tx.currency === "BDX" && tx.status === "completed").reduce((sum, tx) => sum + tx.amount, 0);
-  const bdxWithdrawn = txs.filter((tx) => tx.type === "withdraw" && tx.currency === "BDX" && tx.status === "completed" && tx.method !== "Admin BDX adjustment").reduce((sum, tx) => sum + tx.amount, 0);
+
 
   return (
     <div className="mx-auto max-w-[480px] px-4 pb-[100px] pt-4">
@@ -72,34 +68,16 @@ function Dashboard() {
       )}
 
       <div className="rounded-lg border border-line bg-elevated p-5">
-        <div className="text-xs text-muted">BDX account overview</div>
-        <div className="mt-1 text-lg font-bold text-fg">
-          {t.hello} {user?.name || "Kenneth Munachimso"}!
-        </div>
+        <div className="text-xs text-muted">USD account overview</div>
+        <div className="mt-1 text-lg font-bold text-fg">{t.hello} {user?.name || "Account holder"}!</div>
         <div className="mt-4 rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-4">
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-emerald-300">
-            <Wallet size={15} /> AVAILABLE BDX WALLET
-          </div>
-          <div className="mt-1 text-2xl font-extrabold tabular text-emerald-200">{formatBdx(bdx)}</div>
-          <div className="mt-1 text-[10px] text-subtle">Available BDX balance · BDX investment profits and referral rewards stay in BDX</div>
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-emerald-300"><Wallet size={15} /> AVAILABLE USD BALANCE</div>
+          <div className="mt-1 text-2xl font-extrabold tabular text-emerald-200">{formatUsd(available)}</div>
+          <div className="mt-1 text-[10px] text-subtle">Available account balance, displayed in USD.</div>
         </div>
-        <div className="mt-5 grid grid-cols-2 gap-3">
-          <Stat icon={TrendingUp} label="BDX interest credited" value={formatBdx(bdxProfit)} tone="text-accent" />
-          <Stat icon={Gift} label="BDX bonuses credited" value={formatBdx(bdxBonus)} tone="text-warn" />
-          <Stat icon={Users} label="BDX referral rewards" value={formatBdx(bdxReferralBonus)} tone="text-violet" />
-          <Stat icon={Wallet} label="BDX withdrawals completed" value={formatBdx(bdxWithdrawn)} tone="text-rose" />
-        </div>
-        <Button className="mt-5 w-full" onClick={() => navigate({ to: "/app/deposit" })}>
-          <ArrowDownToLine size={16} /> {t.investNow}
-        </Button>
-        <Button
-          className="mt-3 w-full bg-green-500 text-white hover:bg-green-400"
-          onClick={() => navigate({ to: "/app/plans" })}
-        >
-          <TrendingUp size={16} /> {t.buyPlan}
-        </Button>
+        <Button className="mt-5 w-full" onClick={() => navigate({ to: "/app/deposit" })}><ArrowDownToLine size={16} /> {t.investNow}</Button>
+        <Button className="mt-3 w-full bg-green-500 text-white hover:bg-green-400" onClick={() => navigate({ to: "/app/plans" })}><TrendingUp size={16} /> {t.buyPlan}</Button>
       </div>
-
       <div className="mt-4">
         <div className="text-[13px] font-semibold text-fg">{t.quick}</div>
         <div className="mt-3 grid grid-cols-4 gap-3">
@@ -129,7 +107,7 @@ function Dashboard() {
             <LayoutGrid size={16} className="text-accent" /> {t.page.liveMarketTv}
           </div>
           <a
-            href="https://www.tradingview.com/symbols/BDXUSD/"
+            href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 rounded-full border border-line-strong bg-surface px-2.5 py-1 text-[10px] text-accent"
@@ -218,12 +196,12 @@ function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div className="text-xs font-bold tracking-widest">{p.name}</div>
                   <div className="text-[11px] text-accent">
-                    +{p.currency === "USD" ? formatUsd(accruedProfit(p)) : formatBdx(accruedProfit(p))} {t.accrued}
+                    +{formatUsd(accruedProfit(p))} {t.accrued}
                   </div>
                 </div>
                 <div className="mt-2 text-[11px] text-subtle">
                   {fill(t.page.planMeta, {
-                    amount: p.currency === "USD" ? formatUsd(p.amount) : formatBdx(p.amount),
+                    amount: formatUsd(p.amount),
                     pct: Number((p.dailyPct * p.durationDays).toFixed(2)),
                     days: p.durationDays,
                   })}
