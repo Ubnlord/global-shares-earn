@@ -106,15 +106,6 @@ function Dashboard() {
       </div>
 
       <div className="mt-6 rounded-2xl border border-line bg-elevated p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="text-[13px] font-semibold text-fg">{t.page.overviewStats}</div>
-          <div className="text-[10px] text-subtle">{t.page.chartMeta}</div>
-        </div>
-        <SymbolOverview />
-        <TvCredit className="mt-2" />
-      </div>
-
-      <div className="mt-6 rounded-2xl border border-line bg-elevated p-4">
         <div className="flex items-center justify-between">
           <div className="text-[13px] font-semibold text-fg">{t.recent}</div>
           <Link to="/app/history" className="text-[11px] text-accent">
