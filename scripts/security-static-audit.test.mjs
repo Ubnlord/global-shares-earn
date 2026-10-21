@@ -1,0 +1,83 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+
+const root = process.cwd();
+const migration = fs.readFileSync(path.join(root, "migrations/0008_security_hardening_v1.sql"), "utf8");
+const accountingMigration = fs.readFileSync(path.join(root, "supabase/migrations/20261016090000_bdx_native_accounting_enforcement.sql"), "utf8");
+const adminAccountingMigration = fs.readFileSync(path.join(root, "supabase/migrations/20261016091000_bdx_admin_controls_and_reconciliation.sql"), "utf8");
+const directWriteLockdown = fs.readFileSync(path.join(root, "migrations/0009_lock_down_direct_client_writes.sql"), "utf8");
+const databaseDefense = fs.readFileSync(path.join(root, "migrations/0011_database_api_defense_in_depth.sql"), "utf8");
+const authorizationTightening = fs.readFileSync(path.join(root, "migrations/0012_tighten_authorization_helpers.sql"), "utf8");
+const anonymousAuditLockdown = fs.readFileSync(path.join(root, "migrations/0013_remove_anon_audit_access.sql"), "utf8");
+const adminFinancialControls = fs.readFileSync(path.join(root, "migrations/0014_admin_financial_controls.sql"), "utf8");
+const rootRoute = fs.readFileSync(path.join(root, "src/routes/__root.tsx"), "utf8");
+
+const mustContain = [
+  "revoke all on function public.admin_has_permission(text) from public, anon, authenticated;",
+  "and p_permission = any(coalesce(a.permissions, '{}'::text[]))",
+  "revoke all on function public.assert_user_can_transact(uuid) from public, anon, authenticated;",
+  "grant execute on function public.create_financial_transaction(text,numeric,text,text,uuid) to authenticated;",
+  "grant execute on function public.buy_investment_plan(text,numeric) to authenticated;",
+  "grant execute on function public.accrue_user_investments(uuid) to authenticated;",
+  "grant execute on function public.admin_set_user_block(uuid,boolean,text) to authenticated;",
+  "grant execute on function public.admin_update_investment(uuid,numeric,boolean) to authenticated;",
+  "grant execute on function public.admin_approve_transaction(uuid,text) to authenticated;",
+  "grant execute on function public.admin_reject_transaction(uuid,text) to authenticated;",
+  "grant execute on function public.admin_settle_transaction(uuid,text) to authenticated;",
+  "create unique index if not exists transaction_user_request_id_uq",
+  "perform public.assert_user_can_transact(v_uid);",
+  "alter table public.user_profile enable row level security;",
+  "alter table public.admin_user enable row level security;",
+  "alter table public.transaction enable row level security;",
+  "alter table public.transaction_audit enable row level security;",
+  "alter table public.investment_plan_catalog enable row level security;",
+  "alter table public.user_investment enable row level security;",
+  "create policy user_profile_select_own_or_admin",
+  "create policy transaction_select_own_or_admin",
+  "create policy transaction_audit_select_own_or_admin",
+];
+
+test("database/API defense-in-depth migrations keep critical controls", () => {
+  for (const needle of mustContain) assert.ok(migration.includes(needle), `Missing security control: ${needle}`);
+  assert.match(accountingMigration, /create or replace function public\.swap_assets\([\s\S]*?raise exception 'Currency swaps are retired; use the BDX-native wallet flow'/);
+  assert.match(accountingMigration, /revoke all on function public\.swap_assets\(uuid,text,text,numeric,numeric\) from public, anon, authenticated/i);
+  assert.match(accountingMigration, /grant execute on function public\.swap_assets\(uuid,text,text,numeric,numeric\) to service_role/i);
+  assert.match(accountingMigration, /drop function if exists public\.swap_assets\(text,text,numeric,numeric\)/);
+  assert.equal(
+    fs.existsSync(path.join(root, "supabase/functions/swap-assets/index.ts")),
+    false,
+    "Retired swap Edge Function must not be redeployed from this branch",
+  );
+  assert.match(accountingMigration, /drop function if exists public\.create_financial_transaction\(text,numeric,text,text,uuid\)/);
+  assert.match(adminAccountingMigration, /admin_adjust_bdx_balance/);
+  assert.match(adminAccountingMigration, /Reference was already used for a different BDX adjustment/);
+  assert.match(adminAccountingMigration, /admin_has_permission\('view_transactions'\)/);
+
+  for (const needle of [
+    "revoke all on table public.books from anon, authenticated;",
+    "revoke insert, update, delete, truncate, references, trigger on table public.admin_action_audit from anon, authenticated;",
+    "check (available_balance >= 0)",
+    "check (locked_balance >= 0)",
+    "check (bdx_balance >= 0)",
+    "check (amount > 0)",
+    "check (principal > 0)",
+    "check (daily_rate >= 0)",
+    "check (duration_days > 0)",
+    "check (credited_profit >= 0)",
+  ]) assert.ok(databaseDefense.includes(needle), `Missing defense-in-depth control: ${needle}`);
+
+  assert.match(authorizationTightening, /revoke all on function public\.is_admin\(\) from public, anon, authenticated;/i);
+  assert.match(authorizationTightening, /unique \(user_id\)/i);
+  assert.match(anonymousAuditLockdown, /revoke select on table public\.admin_action_audit from anon;/i);
+});
+
+
+test("dynamic import failures trigger guarded recovery", () => {
+  assert.match(rootRoute, /\[event\.error\?\.message, event\.message\]/);
+  assert.match(rootRoute, /event\.target instanceof HTMLScriptElement/);
+  assert.match(rootRoute, /event\.target\.type === "module"/);
+  assert.match(rootRoute, /__global_beldex_chunk_recovery/);
+  assert.match(rootRoute, /__gb_reload/);
+});
