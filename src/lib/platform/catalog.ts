@@ -13,7 +13,7 @@ export type Plan = {
 
 export const PLANS: Plan[] = [
   {
-    id: "capital-preservation",
+    id: "gns",
     name: "Capital Preservation Plan",
     min: 100,
     max: "500 USD",
@@ -25,7 +25,7 @@ export const PLANS: Plan[] = [
     available: true,
   },
   {
-    id: "fixed-income",
+    id: "build",
     name: "Fixed Income Plan",
     min: 500,
     max: "1,000 USD",
@@ -37,7 +37,7 @@ export const PLANS: Plan[] = [
     available: true,
   },
   {
-    id: "balanced-portfolio",
+    id: "follow",
     name: "Balanced Portfolio",
     min: 1000,
     max: "1,500 USD",
@@ -49,7 +49,7 @@ export const PLANS: Plan[] = [
     available: true,
   },
   {
-    id: "global-index",
+    id: "apex",
     name: "Global Index Plan",
     min: 1500,
     max: "2,000 USD",
@@ -61,7 +61,7 @@ export const PLANS: Plan[] = [
     available: true,
   },
   {
-    id: "sustainable-growth",
+    id: "edifex",
     name: "Sustainable Growth Plan",
     min: 2000,
     max: "4,000 USD",
@@ -73,7 +73,7 @@ export const PLANS: Plan[] = [
     available: true,
   },
   {
-    id: "technology-growth",
+    id: "dixon",
     name: "Technology Growth Plan",
     min: 5000,
     max: "10,000 USD",
@@ -85,7 +85,7 @@ export const PLANS: Plan[] = [
     available: true,
   },
   {
-    id: "project-target",
+    id: "falcon",
     name: "Project Target Plan",
     min: 10000,
     max: "50,000 USD",
