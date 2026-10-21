@@ -109,4 +109,11 @@ export function projectedReturn(amount: number, plan: Plan) {
   const profit = amount * (plan.dailyPct / 100) * plan.durationDays;
   return { profit, total: amount + profit };
 }
+export const COUNTRIES: string[] = ["Nigeria", "Ghana", "Kenya", "South Africa", "United States", "United Kingdom", "Canada", "Australia", "India", "Germany", "France", "Brazil", "Japan", "United Arab Emirates", "Singapore"];
 
+export const DEPOSIT_METHODS = {
+  BTC: { id: "BTC" as const, title: "Bitcoin", address: String(import.meta.env.VITE_BTC_DEPOSIT_ADDRESS ?? ""), qr: "/deposits/bitcoin.jpg" },
+  ETH: { id: "ETH" as const, title: "Ethereum", address: String(import.meta.env.VITE_ETH_DEPOSIT_ADDRESS ?? ""), qr: "/deposits/ethereum.jpg" },
+};
+export const DEPOSIT_ADDRESS = DEPOSIT_METHODS.BTC.address;
+export const WITHDRAW_METHODS = [{ id: "BTC", label: "Bitcoin" }, { id: "ETH", label: "Ethereum" }] as const;
