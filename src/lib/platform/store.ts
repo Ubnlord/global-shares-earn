@@ -243,11 +243,10 @@ export const usePlatform = create<PlatformState>()(
         },
 
         deposit: async (amount, method, requestId, currency) => {
-          const isBeldex = method.toUpperCase() === "BELDEX";
-          const ledgerCurrency = isBeldex ? "BDX" : "USD";
-          if (currency && currency !== ledgerCurrency) return "PAYMENT_METHOD_CURRENCY_MISMATCH";
+          const ledgerCurrency = "USD";
+          if (currency && currency !== "USD") return "PAYMENT_METHOD_CURRENCY_MISMATCH";
           const ledgerAmount = amount;
-          const minimum = isBeldex ? 4000 : 300;
+          const minimum = 300;
           if (!amount || amount < minimum) return "MIN_DEPOSIT";
           const { error } = await supabase.rpc("create_financial_transaction", {
             p_type: "deposit",
@@ -267,12 +266,11 @@ export const usePlatform = create<PlatformState>()(
           const addressError = validateWithdrawalDestination(method, address);
           if (addressError) return addressError;
           if (!amount || amount <= 0) return "NEED_AMOUNT";
-          const isBeldex = method.toUpperCase() === "BELDEX";
-          const ledgerCurrency = isBeldex ? "BDX" : "USD";
-          if (currency && currency !== ledgerCurrency) return "PAYMENT_METHOD_CURRENCY_MISMATCH";
-          const minimum = isBeldex ? 4000 : 300;
+          const ledgerCurrency = "USD";
+          if (currency && currency !== "USD") return "PAYMENT_METHOD_CURRENCY_MISMATCH";
+          const minimum = 300;
           if (amount < minimum) return "MIN_WITHDRAWAL";
-          const balance = ledgerCurrency === "BDX" ? get().bdx : get().available;
+          const balance = get().available;
           if (amount > balance) return "INSUFFICIENT";
           const { error } = await supabase.rpc("create_financial_transaction", {
             p_type: "withdraw",
