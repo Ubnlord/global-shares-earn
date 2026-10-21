@@ -84,7 +84,7 @@ function Login() {
         <div className="mb-6 flex items-center gap-2">
           <Mark className="size-9" />
           <div>
-            <div className="font-bold leading-none">GLOBAL BELDEX</div>
+            <div className="font-bold leading-none">GLOBAL SHARES EARN</div>
             <div className="flex items-center gap-1 text-[10px] text-subtle">
               <span className="size-1.5 rounded-full bg-accent" />
               {t.tag}
