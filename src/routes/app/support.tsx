@@ -22,7 +22,7 @@ function SupportPage() {
       toastError("NEED_TICKET");
       return;
     }
-    const href = `mailto:support@global-beldex.com?subject=${encodeURIComponent(subject.trim())}&body=${encodeURIComponent(body.trim())}`;
+    const href = `https://wa.me/14195080286?text=${encodeURIComponent(`${subject.trim()}\n\n${body.trim()}`)}`;
     window.location.href = href;
   };
 
@@ -35,11 +35,11 @@ function SupportPage() {
         <div className="text-[11px] text-subtle">{t.supportEmail}</div>
 
         <a
-          href="mailto:support@global-beldex.com"
+          href="mailto:"
           className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
         >
           <Mail size={16} />
-          Email Support
+          Message Support on WhatsApp
         </a>
 
         <a
