@@ -4,7 +4,7 @@ import { toast, toastError } from "@/components/layout/toast";
 import { Button } from "@/components/ui/button";
 import { referralLink, usePlatform } from "@/lib/platform/store";
 import { copy } from "@/lib/platform/i18n";
-import { copyText, formatBdx, formatUsd } from "@/lib/utils";
+import { copyText, formatUsd } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/referrals")({ component: ReferralsPage });
 
@@ -12,9 +12,6 @@ function ReferralsPage() {
   const user = usePlatform((s) => s.user);
   const referralBonus = usePlatform((s) => s.referralBonus);
   const txs = usePlatform((s) => s.txs);
-  const bdxReferralBonus = txs
-    .filter((tx) => tx.type === "referral" && tx.currency === "BDX" && tx.status === "completed")
-    .reduce((sum, tx) => sum + tx.amount, 0);
   const copyReferral = usePlatform((s) => s.copyReferral);
   const lang = usePlatform((s) => s.lang);
   const t = copy[lang];
@@ -27,8 +24,6 @@ function ReferralsPage() {
       <div className="mt-6 rounded-lg border border-line bg-elevated p-5">
         <div className="text-[11px] text-muted">{t.referralEarned} · USD</div>
         <div className="text-2xl font-bold tabular text-accent">{formatUsd(referralBonus)}</div>
-        <div className="mt-4 text-[11px] text-muted">{t.referralEarned} · BDX</div>
-        <div className="text-xl font-bold tabular text-emerald-300">{formatBdx(bdxReferralBonus)} BDX</div>
         <div className="mt-5 text-[13px] font-semibold">{t.yourLink}</div>
         <div className="mt-2 break-all rounded-md border border-line-strong bg-surface px-3 py-3 text-[11px] text-muted">
           {link}
