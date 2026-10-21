@@ -1,33 +1,22 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Check, Copy } from "lucide-react";
 import { useEffect, useState } from "react";
-import { TickerTape } from "@/components/market/tradingview";
-import { BeldexLivePrice, CoinPrice, MarketBoard, coinQty, formatCoinUsd, useBeldexQuote } from "@/components/market/live-price";
 import { toast, toastError } from "@/components/layout/toast";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input } from "@/components/ui/input";
-import { CoinLogo } from "@/components/market/coin-logo";
 import { DEPOSIT_METHODS } from "@/lib/platform/catalog";
 import { copy } from "@/lib/platform/i18n";
 import { usePlatform } from "@/lib/platform/store";
-import { formatBdx, formatUsd, copyText } from "@/lib/utils";
+import { formatUsd, copyText } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/deposit")({ component: DepositPage });
-
-async function copyAddress(value: string, message: string) {
-  await copyText(value);
-  toast(message);
-}
 
 function DepositPage() {
   const navigate = useNavigate();
   const deposit = usePlatform((s) => s.deposit);
   const lang = usePlatform((s) => s.lang);
   const t = copy[lang];
-  const { book } = useBeldexQuote();
   const [amount, setAmount] = useState("");
-  const [method, setMethod] = useState<keyof typeof DEPOSIT_METHODS>("BELDEX");
-  const isBeldex = method === "BELDEX";
+  const [method, setMethod] = useState<"BTC" | "ETH">("BTC");
   const [step, setStep] = useState<"form" | "pay">(() => {
     if (typeof window === "undefined") return "form";
     return new URLSearchParams(window.location.search).get("step") === "pay" ? "pay" : "form";
@@ -35,25 +24,16 @@ function DepositPage() {
   const [requestId, setRequestId] = useState<string | null>(null);
 
   useEffect(() => {
-    const handlePopState = () => {
-      const isPayStep = new URLSearchParams(window.location.search).get("step") === "pay";
-      setStep(isPayStep ? "pay" : "form");
-    };
-
+    const handlePopState = () => setStep(new URLSearchParams(window.location.search).get("step") === "pay" ? "pay" : "form");
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  const quoteId = method === "BTC" ? "bitcoin" : method === "ETH" ? "ethereum" : "beldex";
-  const ticker = method === "BTC" ? "BTC" : method === "ETH" ? "ETH" : "BDX";
-  const spot = book[quoteId];
-  const qty = isBeldex ? null : coinQty(parseFloat(amount) || 0, spot?.usd ?? 0);
-
+  const selected = DEPOSIT_METHODS[method];
   const goPay = () => {
-    const n = parseFloat(amount);
-    const minimum = isBeldex ? 4000 : 300;
-    if (!n || n < minimum) {
-      toast(t.err.MIN_DEPOSIT);
+    const n = Number.parseFloat(amount);
+    if (!Number.isFinite(n) || n < 300) {
+      toastError("Minimum deposit is $300 USD.");
       return;
     }
     setRequestId(crypto.randomUUID());
@@ -64,8 +44,8 @@ function DepositPage() {
   };
 
   const confirm = async () => {
-    const n = parseFloat(amount);
-    const err = await deposit(n, DEPOSIT_METHODS[method].title, requestId ?? crypto.randomUUID(), isBeldex ? "BDX" : "USD");
+    const n = Number.parseFloat(amount);
+    const err = await deposit(n, selected.title, requestId ?? crypto.randomUUID(), "USD");
     if (err) {
       toastError(err);
       return;
@@ -74,183 +54,50 @@ function DepositPage() {
     void navigate({ to: "/app/history" });
   };
 
+  const copyAddress = async () => {
+    await copyText(selected.address);
+    toast(t.addressCopied);
+  };
+
   return (
-    <div className="mx-auto max-w-[480px] px-4 pb-[100px] pt-4">
-      <div className="mb-4">
-        <TickerTape />
-      </div>
+    <div className="mx-auto max-w-[480px] px-4 pb-[100px] pt-6">
       <h2 className="text-xl font-bold">{t.depositTitle}</h2>
-      <p className="mt-1 text-xs text-subtle">{t.depositLead}</p>
-
-      <div className="mt-4">
-        <BeldexLivePrice />
-      </div>
-
-      <div className="mt-4">
-        <MarketBoard active="beldex" />
-      </div>
-
+      <p className="mt-1 text-xs text-subtle">Deposit requests and account balances are recorded in USD.</p>
       {step === "form" ? (
-        <div className="mt-6 rounded-lg border border-line bg-elevated p-5">
-          <FieldLabel><span className="mt-4 block">{isBeldex ? "Amount (BDX)" : "Amount (USD)"}</span></FieldLabel>
-          <div className="relative mt-2">
-            <Input
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              type="number"
-              placeholder={isBeldex ? "Enter BDX amount... Min 4,000" : "Enter USD amount... Min $300"}
-              className="mt-0 h-14 border-2 border-line-strong bg-surface px-4 text-base font-medium placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-accent/20"
-            />
-          </div>
-          <div className="mt-2 text-[10px] text-subtle">
-            {isBeldex ? `Minimum: ${formatBdx(4000)} BDX` : `Minimum: ${formatUsd(300)} USD`}
-          </div>
-          <div className="mt-5">
-            <div className="mb-2 text-[11px] text-muted">{t.payMethod}</div>
-            <div className="grid gap-2">
-              <button
-                type="button"
-                onClick={() => setMethod("BELDEX")}
-                className={
-                  method === "BELDEX"
-                    ? "flex items-center justify-between rounded-md border-2 border-accent bg-accent/10 p-3"
-                    : "flex items-center justify-between rounded-md border border-line-strong p-3 opacity-60"
-                }
-              >
-                <div className="flex items-center gap-3">
-                  <CoinLogo coin="beldex" size={32} />
-                  <div>
-                    <div className="text-[13px] font-semibold text-fg">{t.beldexInstant}</div>
-                    <div className="text-[11px] text-subtle">{t.beldexDetail}</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CoinPrice id="beldex" />
-                  {method === "BELDEX" && (
-                    <div className="flex size-5 items-center justify-center rounded-full bg-accent text-accent-fg">
-                      <Check size={12} />
-                    </div>
-                  )}
-                </div>
-              </button>
-
-            </div>
-          </div>
-          <Button className="mt-6 w-full" onClick={goPay}>
-            {t.continuePay}
-          </Button>
-        </div>
-      ) : (
-        <div className="mt-6 rounded-lg border border-line bg-elevated p-5">
-          <div className="text-xs text-muted">{t.sendExactly}</div>
-          <div className="text-2xl font-bold tabular text-accent">
-            {isBeldex ? `${formatBdx(parseFloat(amount || "0"))} BDX` : `${parseFloat(amount || "0").toFixed(3)} USD`}
-          </div>
-          <div className="mt-1 text-[11px] text-subtle">
-            via {DEPOSIT_METHODS[method].title}
-            {isBeldex ? " · BDX amount only" : spot ? ` · ${formatCoinUsd(spot.usd)}` : ""}
-          </div>
-          {isBeldex ? null : qty && spot ? (
-            <div className="mt-3 rounded-md border border-line bg-surface px-3 py-2.5">
-              <div className="text-[10px] text-subtle">Live market price</div>
-              <div className="mt-1 flex items-end justify-between">
-                <div className="text-lg font-bold tabular text-fg">{formatCoinUsd(spot.usd)}</div>
-                <div className="text-sm font-semibold tabular text-accent">
-                  ≈ {qty} {ticker}
-                </div>
-              </div>
-            </div>
-          ) : null}
-          <div className="mt-5">
-            <FieldLabel>{t.depositAddress}</FieldLabel>
-            <div className="mt-2 flex gap-2">
-              <button
-                type="button"
-                onClick={() => copyAddress(DEPOSIT_METHODS[method].address, t.addressCopied)}
-                className="min-w-0 flex-1 break-all rounded-md border border-line-strong bg-surface px-3 py-3 text-left text-[11px] text-muted"
-              >
-                {DEPOSIT_METHODS[method].address}
-              </button>
-              <Button
-                variant="secondary"
-                size="icon"
-                onClick={() => copyAddress(DEPOSIT_METHODS[method].address, t.addressCopied)}
-                aria-label={t.addressCopied}
-              >
-                <Copy size={14} />
-              </Button>
-            </div>
-          </div>
-          <img
-            src={DEPOSIT_METHODS[method].qr}
-            alt={`${DEPOSIT_METHODS[method].title} deposit QR`}
-            className="mx-auto mt-5 size-56 rounded-xl bg-white p-2"
+        <section className="mt-6 rounded-xl border border-line bg-elevated p-5">
+          <FieldLabel>Amount (USD)</FieldLabel>
+          <Input
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            type="number"
+            min={300}
+            step="0.01"
+            placeholder="Minimum $300 USD"
           />
-          <p className="mt-3 text-[11px] text-subtle">
-            {t.simAddress}
-          </p>
-          <div className="mt-6 flex gap-2">
-            <Button
-              variant="secondary"
-              className="flex-1"
-              onClick={() => {
-                if (window.history.state?.depositStep === "pay") {
-                  window.history.back();
-                } else {
-                  setStep("form");
-                }
-              }}
-            >
-              {t.back}
-            </Button>
-            <Button className="flex-1" onClick={confirm}>
-              {t.sentIt}
-            </Button>
+          <p className="mt-2 text-[11px] text-subtle">Minimum deposit: {formatUsd(300)}. Requests are reviewed before balances are credited.</p>
+          <FieldLabel><span className="mt-5 block">{t.payMethod}</span></FieldLabel>
+          <div className="mt-2 grid grid-cols-2 gap-3">
+            {(["BTC", "ETH"] as const).map((id) => (
+              <button key={id} type="button" onClick={() => setMethod(id)} className={method === id ? "rounded-lg border-2 border-accent bg-accent/10 p-3 text-left" : "rounded-lg border border-line p-3 text-left"}>
+                <div className="font-semibold">{id === "BTC" ? "Bitcoin" : "Ethereum"}</div>
+                <div className="mt-1 text-xs text-subtle">{id === "BTC" ? "Bitcoin network" : "Ethereum network"}</div>
+              </button>
+            ))}
           </div>
-        </div>
+          <Button className="mt-6 w-full" onClick={goPay}>{t.continuePay}</Button>
+        </section>
+      ) : (
+        <section className="mt-6 rounded-xl border border-line bg-elevated p-5">
+          <div className="text-xs text-muted">Deposit request amount</div>
+          <div className="mt-1 text-2xl font-bold text-accent">{formatUsd(Number.parseFloat(amount) || 0)}</div>
+          <div className="mt-1 text-sm font-semibold">{selected.title}</div>
+          <p className="mt-2 text-xs leading-5 text-subtle">Your account request is denominated in USD. Confirm the current crypto equivalent and network before sending funds; the transfer is reviewed before crediting.</p>
+          <div className="mt-4 break-all rounded-lg border border-line bg-surface p-3 text-sm">{selected.address}</div>
+          <Button variant="outline" className="mt-3 w-full" onClick={copyAddress}>{t.addressCopied === "Address copied" ? "Copy deposit address" : t.depositAddress}</Button>
+          <Button className="mt-3 w-full" onClick={confirm}>{t.sentIt}</Button>
+          <Button variant="ghost" className="mt-2 w-full" onClick={() => setStep("form")}>{t.back}</Button>
+        </section>
       )}
     </div>
-  );
-}
-
-function Method({
-  active,
-  onClick,
-  title,
-  detail,
-  coin,
-}: {
-  active: boolean;
-  onClick: () => void;
-  title: string;
-  detail: string;
-  coin: "bitcoin" | "ethereum" | "beldex";
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={
-        active
-          ? "flex items-center justify-between rounded-md border-2 border-accent bg-accent/10 p-3"
-          : "flex items-center justify-between rounded-md border border-line-strong p-3"
-      }
-    >
-      <div className="flex items-center gap-3">
-        <CoinLogo coin={coin} size={32} />
-        <div className="text-left">
-          <div className="text-[13px] text-fg">{title}</div>
-          <div className="text-[11px] text-subtle">{detail}</div>
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <CoinPrice id={coin} />
-        {active && (
-          <div className="flex size-5 items-center justify-center rounded-full bg-accent text-accent-fg">
-            <Check size={12} />
-          </div>
-        )}
-      </div>
-    </button>
   );
 }
