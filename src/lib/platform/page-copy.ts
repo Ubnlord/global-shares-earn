@@ -104,7 +104,7 @@ export const pageEn = {
   legalIntro: "Global Shares Earn is a professional trading and investment platform. We provide highly secure wallets, real-time market execution, and institutional-grade charting tools.",
   legalBack: "Back to the platform",
   legalTerms: [
-    "By opening an account, you can deposit funds starting from $300, execute swaps between USD and USD, and stake assets into our GNS and Falcon plans.",
+    "All deposits, withdrawals, balances, and investment accounting are denominated in USD. Currency swaps are not available.",
     "Protect your account with a strong password and keep your sign-in credentials private. Additional authentication controls should be enabled only when configured in the account security settings.",
     "Only use the deposit addresses explicitly generated for your session after clicking “Continue to Payment”.",
   ],
@@ -208,7 +208,7 @@ export const pageEs: typeof pageEn = {
   legalIntro: "Global Shares Earn es una plataforma profesional de inversión y trading. Proveemos carteras seguras, ejecución en tiempo real y herramientas gráficas de grado institucional.",
   legalBack: "Volver a la plataforma",
   legalTerms: [
-    "Puedes abrir una cuenta, depositar un importe inicial desde $300, cambiar entre USD y USD, y hacer staking de fondos en planes GNS y Falcon.",
+    "Los depósitos, retiros, saldos y la contabilidad de inversiones se denominan en USD. Los cambios de moneda no están disponibles.",
     "Tu cuenta está protegida con encriptación avanzada. Asegúrate de activar la autenticación de dos factores (2FA) para retiros y cambios.",
     "Utiliza únicamente las direcciones de depósito generadas explícitamente tras hacer clic en “Continuar al pago”.",
   ],
@@ -318,7 +318,7 @@ export const pageFr: typeof pageEn = {
   legalIntro: "Global Shares Earn est une plateforme professionnelle de trading. Nous fournissons des portefeuilles sécurisés, une exécution en temps réel et des outils graphiques de niveau institutionnel.",
   legalBack: "Retour à la plateforme",
   legalTerms: [
-    "Vous pouvez ouvrir un compte, effectuer un dépôt à partir de 300 $, trader entre l'USD et le USD, et staker des fonds via nos plans GNS et Falcon.",
+    "Les dépôts, retraits, soldes et opérations d’investissement sont comptabilisés en USD. Les conversions de devises ne sont pas disponibles.",
     "Votre compte est protégé par un chiffrement avancé. Assurez-vous d'activer l'authentification à deux facteurs (2FA) pour vos retraits.",
     "Utilisez uniquement les adresses de dépôt générées explicitement après avoir cliqué sur « Continuer vers le paiement ».",
   ],
@@ -428,7 +428,7 @@ export const pageIt: typeof pageEn = {
   legalIntro: "Global Shares Earn è una piattaforma di trading e investimento professionale. Offriamo wallet ultra-sicuri, esecuzione in tempo reale e grafici di livello istituzionale.",
   legalBack: "Torna alla piattaforma",
   legalTerms: [
-    "Puoi aprire un account, depositare fondi a partire da $300, effettuare swap tra USD e USD e bloccare asset nei piani GNS e Falcon.",
+    "Depositi, prelievi, saldi e contabilità degli investimenti sono denominati in USD. Gli scambi tra valute non sono disponibili.",
     "Il tuo account è protetto da cifratura avanzata. Assicurati di attivare l'autenticazione a due fattori (2FA) per i prelievi e le modifiche.",
     "Usa unicamente gli indirizzi di deposito generati esplicitamente dopo aver cliccato su “Continua al pagamento”.",
   ],
@@ -538,7 +538,7 @@ export const pagePt: typeof pageEn = {
   legalIntro: "A Global Shares Earn é uma plataforma de trading e investimento profissional. Fornecemos carteiras seguras, execução em tempo real e ferramentas gráficas de nível institucional.",
   legalBack: "Voltar à plataforma",
   legalTerms: [
-    "Você pode abrir uma conta, depositar fundos a partir de $300, realizar swaps entre USD e USD, e fazer staking de ativos nos planos GNS e Falcon.",
+    "Depósitos, saques, saldos e contabilidade de investimentos são denominados em USD. Conversões entre moedas não estão disponíveis.",
     "Sua conta é protegida com criptografia avançada. Certifique-se de ativar a autenticação de dois fatores (2FA) para retiradas e alterações.",
     "Utilize apenas os endereços de depósito gerados explicitamente após clicar em “Continuar para o pagamento”.",
   ],
@@ -648,7 +648,7 @@ export const pageNl: typeof pageEn = {
   legalIntro: "Global Shares Earn is een professioneel handels- en investeringsplatform. Wij bieden zwaar beveiligde wallets, realtime uitvoering en institutionele grafische tools.",
   legalBack: "Terug naar het platform",
   legalTerms: [
-    "Je kunt een account openen, fondsen storten vanaf $300, swappen tussen USD en USD, en vermogen vastzetten in onze GNS- en Falcon-plannen.",
+    "Stortingen, opnames, saldi en beleggingsboekhouding zijn uitsluitend in USD. Valutawissels zijn niet beschikbaar.",
     "Je account is beveiligd met geavanceerde versleuteling. Zorg ervoor dat je tweestapsverificatie (2FA) inschakelt voor opnames en wijzigingen.",
     "Gebruik uitsluitend de stortingsadressen die expliciet voor jou worden gegenereerd na het klikken op “Doorgaan naar betaling”.",
   ],
