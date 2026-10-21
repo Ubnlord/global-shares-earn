@@ -2,7 +2,7 @@
 
 **Planned domain:** https://globalsharesearn.com (registration and DNS setup pending)
 
-GLOBAL SHARES EARN is being prepared as a web application with account access, a BDX-denominated wallet, investment plans, deposits, withdrawals, transaction history, and protected administrative workflows.
+GLOBAL SHARES EARN is a web application with account access, USD-denominated balances and investment accounting, cryptocurrency deposit and withdrawal requests, transaction history, and protected administrative workflows. Historical records in legacy denominations must remain identifiable and must not be silently converted or combined with USD balances.
 
 ## Deployment
 
@@ -10,4 +10,4 @@ The project is configured for GitHub Pages. The existing custom domain remains i
 
 ## Security and release checks
 
-The repository includes workflows for deployment, secret scanning, financial safeguards, and security build verification. Financial changes must pass the relevant checks before release.
+The repository includes workflows for deployment, secret scanning, financial safeguards, and security build verification. Financial changes must pass the relevant checks before release. The intended live accounting denomination is USD only. Legacy BDX records are retained for audit until an explicitly reviewed reconciliation migration is approved; no conversion rate or balance conversion may be inferred.
