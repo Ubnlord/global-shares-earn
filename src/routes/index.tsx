@@ -136,6 +136,74 @@ function Landing() {
 
 
 
+      {/* Customer testimonials: publish only approved, verified customer quotes. */}
+      <section className="mt-16" aria-labelledby="testimonials-heading">
+        <div className="text-center">
+          <div className="text-xs font-semibold tracking-widest text-accent">CUSTOMER STORIES</div>
+          <h2 id="testimonials-heading" className="mt-2 text-[28px] font-bold">Testimonials</h2>
+          <p className="mx-auto mt-3 max-w-[680px] text-sm leading-6 text-muted">
+            We value customer feedback. Testimonials are being verified and will be published here
+            with permission; we do not invent reviews or promise investment outcomes.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            { image: "gary-james.jpg", label: "Customer portrait 1" },
+            { image: "kevin-gaines.jpg", label: "Customer portrait 2" },
+            { image: "robert-hopkins.jpg", label: "Customer portrait 3" },
+            { image: "steven-tacconi.jpg", label: "Customer portrait 4" },
+            { image: "ted-shannon.jpg", label: "Customer portrait 5" },
+          ].map((person) => (
+            <article key={person.image} className="flex items-center gap-4 rounded-xl border border-line bg-surface p-4">
+              <img
+                src={`${import.meta.env.BASE_URL}testimonials/${person.image}`}
+                alt={person.label}
+                loading="lazy"
+                className="h-16 w-16 shrink-0 rounded-full border border-line object-cover"
+              />
+              <div>
+                <div className="font-semibold text-fg">Customer feedback</div>
+                <p className="mt-1 text-sm leading-5 text-subtle">
+                  Verified customer comments will appear here after approval and consent.
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-16" aria-labelledby="awards-heading">
+        <div className="text-center">
+          <div className="text-xs font-semibold tracking-widest text-accent">RECOGNITION</div>
+          <h2 id="awards-heading" className="mt-2 text-[28px] font-bold">Awards &amp; Recognition</h2>
+          <p className="mx-auto mt-3 max-w-[680px] text-sm leading-6 text-muted">
+            Browse the recognition materials available in our media library. Award names, issuers,
+            dates, and any claim of an award being granted to GLOBAL SHARES EARN must be verified
+            before being represented as an official achievement.
+          </p>
+        </div>
+        <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {[
+            { image: "award-1.jpg", label: "Award image 1" },
+            { image: "award-2.jpg", label: "Award image 2" },
+            { image: "award-3.jpg", label: "Award image 3" },
+            { image: "award-4.jpg", label: "Award image 4" },
+          ].map((award) => (
+            <figure key={award.image} className="overflow-hidden rounded-xl border border-line bg-surface p-3">
+              <img
+                src={`${import.meta.env.BASE_URL}awards/${award.image}`}
+                alt={award.label}
+                loading="lazy"
+                className="aspect-[4/3] w-full rounded-lg object-contain"
+              />
+              <figcaption className="mt-3 text-center text-xs leading-5 text-subtle">
+                Recognition material — details pending verification
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
       <section className="mt-16">
         <div className="text-center">
           <div className="text-xs font-semibold tracking-widest text-accent">{t.how}</div>
