@@ -113,7 +113,7 @@ function SettingsPage() {
             <span className="text-xs text-subtle">{t.sessionBody}</span>
           </Row>
           <Row label={t.marketData}>
-            <span className="text-xs text-muted">TradingView · CRYPTO:BDXUSD</span>
+            <span className="text-xs text-muted">TradingView · Major crypto pairs in USD</span>
           </Row>
         </div>
       </section>
