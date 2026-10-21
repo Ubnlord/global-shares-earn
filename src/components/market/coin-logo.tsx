@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
 import { Bitcoin, Coins } from "lucide-react";
 
-export type CoinMark = "beldex" | "bitcoin" | "ethereum";
+export type CoinMark = "bitcoin" | "ethereum" | "other";
 
 export function coinMark(id: string): CoinMark {
   const key = id.toUpperCase();
   if (key === "BTC" || key === "BITCOIN") return "bitcoin";
   if (key === "ETH" || key === "ETHEREUM") return "ethereum";
-  return "beldex";
+  return "other";
 }
 
 export function CoinLogo({
@@ -27,5 +27,5 @@ export function CoinLogo({
   if (mark === "ethereum") {
     return <span aria-label="Ethereum" role="img" className={cn("inline-flex shrink-0 items-center justify-center rounded-full bg-[#627EEA] text-white", className)} style={shared}><span className="font-bold" style={{ fontSize: size * 0.62 }}>◆</span></span>;
   }
-  return <span aria-label="BDX" role="img" className={cn("inline-flex shrink-0 items-center justify-center rounded-full border border-emerald-300/40 bg-gradient-to-br from-emerald-300 to-emerald-700 font-black text-[#062018]", className)} style={{ ...shared, fontSize: size * 0.34 }}>BDX</span>;
+  return <span aria-label="Cryptocurrency" role="img" className={cn("inline-flex shrink-0 items-center justify-center rounded-full border border-line bg-elevated text-muted", className)} style={shared}><Coins size={size * 0.58} /></span>;
 }
