@@ -478,7 +478,7 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
       assert.equal(auditRows?.length, 1);
     });
 
-    await step("concurrent BDX withdrawals reserve BDX balance only once", async () => {
+    await step("concurrent legacy BDX withdrawals are rejected without balance changes", async () => {
       const seeded = await admin.from("user_profile")
         .update({ bdx_balance: 5000 })
         .eq("user_id", users.normal.id);
@@ -495,25 +495,25 @@ test("financial authorization and currency controls hold", { skip: !url || !serv
           p_type: "withdraw",
           p_amount: 4000,
           p_method: "Beldex",
-          p_note: "A".repeat(95),
+          p_note: "legacy USD-only regression test",
           p_request_id: requestId,
           p_currency: "BDX",
         })
       ));
-      assert.equal(results.filter((result) => !result.error).length, 1);
-      assert.equal(results.filter((result) => result.error).length, 1);
+      assert.equal(results.filter((result) => !result.error).length, 0, "both legacy BDX withdrawals must be rejected");
+      assert.equal(results.filter((result) => result.error).length, 2, "both legacy BDX withdrawals must fail");
       const after = await admin.from("user_profile")
         .select("bdx_balance")
         .eq("user_id", users.normal.id)
         .single();
       assert.ifError(after.error);
-      assert.equal(Number(before.data.bdx_balance) - Number(after.data.bdx_balance), 4000);
+      assert.equal(Number(after.data.bdx_balance), Number(before.data.bdx_balance), "rejected withdrawals must not change BDX balance");
       const { data, error } = await admin.from("transaction")
         .select("id")
         .eq("user_id", users.normal.id)
         .in("request_id", requestIds);
       assert.ifError(error);
-      assert.equal(data?.length, 1);
+      assert.equal(data?.length, 0, "rejected withdrawals must not create transaction rows");
     });
 
     await step("concurrent BDX settlement updates BDX totals and audit once", async () => {
