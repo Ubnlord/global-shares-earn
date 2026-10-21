@@ -136,37 +136,56 @@ function Landing() {
 
 
 
-      {/* Customer testimonials: publish only approved, verified customer quotes. */}
+      {/* Testimonials supplied by the site owner for publication. */}
       <section className="mt-16" aria-labelledby="testimonials-heading">
         <div className="text-center">
           <div className="text-xs font-semibold tracking-widest text-accent">CUSTOMER STORIES</div>
-          <h2 id="testimonials-heading" className="mt-2 text-[28px] font-bold">Testimonials</h2>
+          <h2 id="testimonials-heading" className="mt-2 text-[28px] font-bold">What Our Clients Say</h2>
           <p className="mx-auto mt-3 max-w-[680px] text-sm leading-6 text-muted">
-            We value customer feedback. Testimonials are being verified and will be published here
-            with permission; we do not invent reviews or promise investment outcomes.
+            Read feedback shared for publication by clients of Global Shares Earn. Testimonials
+            reflect individual experiences and are not a guarantee of future results.
           </p>
         </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
           {[
-            { image: "gary-james.jpg", label: "Customer portrait 1" },
-            { image: "kevin-gaines.jpg", label: "Customer portrait 2" },
-            { image: "robert-hopkins.jpg", label: "Customer portrait 3" },
-            { image: "steven-tacconi.jpg", label: "Customer portrait 4" },
-            { image: "ted-shannon.jpg", label: "Customer portrait 5" },
+            {
+              image: "steven-tacconi.jpg",
+              name: "STEVEN TACCONI",
+              quote: "As a satisfied client, I am just writing to tell of how much I have appreciated and enjoyed working with Global Shares Earn. I would personally rank Global Shares Earn at the top of the list when it comes to professionalism and overall knowledge of the futures business. Clearly, Global Shares Earn is interested in the continuing success of their clients. Their attention to personal service is outstanding. It is truly been a positive experience working with them.",
+            },
+            {
+              image: "kevin-gaines.jpg",
+              name: "KEVIN GAINES",
+              quote: "Global Shares Earn exceeds expectations time after time. Their vast experience and knowledge of the global futures markets will save you time and money when it comes to execution, rolls and research. The entire staff/Traders put a great deal of effort into their relationship with clients, and I am truly appreciative of all they have done for me.",
+            },
+            {
+              image: "gary-james.jpg",
+              name: "GARY JAMES",
+              quote: "I must say this platform is indeed amazing. it was a glimpse at first but today i can account for a real trade when it comes to Investing on Global Shares Earn.",
+            },
+            {
+              image: "robert-hopkins.jpg",
+              name: "ROBERT HOPKINS",
+              quote: "I have been a client of Global Shares Earn for over the last year. I have found this company to be competent, capable, knowledgeable, and a vital component of building my Manufacturing business. I would highly recommend Global Shares Earn.",
+            },
+            {
+              image: "ted-shannon.jpg",
+              name: "TED & SHANNON",
+              quote: "I absolutely love your service. I don’t know how you do it, but I am very, very happy that I found you, and I can’t thank you enough for helping me to realize my dream of achieving a supplemental income to my Administrative business, which I have been able to skyrocket to another level with the extra money I make by Investing with Global Shares Earn.",
+            },
           ].map((person) => (
-            <article key={person.image} className="flex items-center gap-4 rounded-xl border border-line bg-surface p-4">
-              <img
-                src={`${import.meta.env.BASE_URL}testimonials/${person.image}`}
-                alt={person.label}
-                loading="lazy"
-                className="h-16 w-16 shrink-0 rounded-full border border-line object-cover"
-              />
-              <div>
-                <div className="font-semibold text-fg">Customer feedback</div>
-                <p className="mt-1 text-sm leading-5 text-subtle">
-                  Verified customer comments will appear here after approval and consent.
-                </p>
+            <article key={person.name} className="rounded-xl border border-line bg-surface p-5 sm:p-6">
+              <div className="flex items-center gap-3">
+                <img
+                  src={`${import.meta.env.BASE_URL}testimonials/${person.image}`}
+                  alt={person.name}
+                  loading="lazy"
+                  className="h-14 w-14 shrink-0 rounded-full border border-line object-cover"
+                />
+                <div className="text-sm font-bold tracking-wide text-fg">{person.name}</div>
               </div>
+              <div className="mt-4 text-2xl leading-none text-accent" aria-hidden="true">“</div>
+              <blockquote className="text-sm leading-6 text-subtle">{person.quote}</blockquote>
             </article>
           ))}
         </div>
