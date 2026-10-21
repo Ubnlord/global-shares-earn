@@ -4,17 +4,16 @@ import {
   ArrowDownToLine,
   ArrowUpFromLine,
   Copy,
-  ExternalLink,
+  Gift,
   History,
   LayoutGrid,
   TrendingUp,
+  UsersRound,
   Wallet,
   X,
 } from "lucide-react";
-import { AdvancedChart, SymbolOverview } from "@/components/market/tradingview";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/layout/toast";
-import { TvCredit } from "@/components/platform/plan-card";
 import { TxRow } from "@/components/platform/tx-row";
 import { copy, fill } from "@/lib/platform/i18n";
 import {
@@ -39,10 +38,11 @@ function Dashboard() {
   const lang = usePlatform((s) => s.lang);
   const t = copy[lang];
   const active = plans.filter((p) => p.status === "active");
+  const accrued = active.reduce((total, plan) => total + accruedProfit(plan), 0);
 
 
   return (
-    <div className="mx-auto max-w-[480px] px-4 pb-[100px] pt-4">
+    <div className="mx-auto max-w-[520px] px-4 pb-[110px] pt-4">
       {accrualFailed && (
         <div role="alert" className="mb-4 rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-200">
           We couldn't refresh your account data from the server. Your last saved balances are still shown; they may be out of date. Please refresh later or contact support if this continues.
@@ -66,14 +66,20 @@ function Dashboard() {
       )}
 
       <div className="rounded-lg border border-line bg-elevated p-5">
-        <div className="text-xs text-muted">USD account overview</div>
+        <div className="text-xs text-muted">YOUR GSE ACCOUNT</div>
         <div className="mt-1 text-lg font-bold text-fg">{t.hello} {user?.name || "Account holder"}!</div>
-        <div className="mt-4 rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-4">
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-emerald-300"><Wallet size={15} /> AVAILABLE USD BALANCE</div>
-          <div className="mt-1 text-2xl font-extrabold tabular text-emerald-200">{formatUsd(available)}</div>
-          <div className="mt-1 text-[10px] text-subtle">Available account balance, displayed in USD.</div>
+        <div className="mt-4 rounded-lg border border-accent/40 bg-accent/10 p-4">
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-accent"><Wallet size={15} /> AVAILABLE USD BALANCE</div>
+          <div className="mt-1 text-2xl font-extrabold tabular text-accent">{formatUsd(available)}</div>
+          <div className="mt-1 text-[10px] text-subtle">Available balance · USD</div>
         </div>
-        <Button className="mt-5 w-full" onClick={() => navigate({ to: "/app/deposit" })}><ArrowDownToLine size={16} /> {t.investNow}</Button>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+        <Stat icon={TrendingUp} label="Accrued investment profit" value={formatUsd(accrued)} tone="text-accent" />
+        <Stat icon={Wallet} label="Invested / locked" value={formatUsd(locked)} tone="text-accent" />
+        <Stat icon={Gift} label="Active investment plans" value={String(active.length)} tone="text-amber-400" />
+        <Stat icon={UsersRound} label="Transaction records" value={String(txs.length)} tone="text-accent" />
+      </div>
+      <Button className="mt-5 w-full" onClick={() => navigate({ to: "/app/deposit" })}><ArrowDownToLine size={16} /> {t.investNow}</Button>
         <Button className="mt-3 w-full bg-green-500 text-white hover:bg-green-400" onClick={() => navigate({ to: "/app/plans" })}><TrendingUp size={16} /> {t.buyPlan}</Button>
       </div>
       <div className="mt-4">
@@ -99,30 +105,7 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="mt-6 rounded-lg border border-line bg-elevated p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-[13px] font-semibold text-fg">
-            <LayoutGrid size={16} className="text-accent" /> {t.page.liveMarketTv}
-          </div>
-          <a
-            href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 rounded-full border border-line-strong bg-surface px-2.5 py-1 text-[10px] text-accent"
-          >
-            {t.page.viewChart} <ExternalLink size={10} />
-          </a>
-        </div>
-        <div className="mt-4">
-          <AdvancedChart />
-        </div>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-          <TvCredit />
-          <div className="text-[10px] text-subtle">{t.page.symbolLine}</div>
-        </div>
-      </div>
-
-      <div className="mt-6 rounded-lg border border-line bg-elevated p-4">
+      <div className="mt-6 rounded-2xl border border-line bg-elevated p-4">
         <div className="mb-3 flex items-center justify-between">
           <div className="text-[13px] font-semibold text-fg">{t.page.overviewStats}</div>
           <div className="text-[10px] text-subtle">{t.page.chartMeta}</div>
@@ -131,7 +114,7 @@ function Dashboard() {
         <TvCredit className="mt-2" />
       </div>
 
-      <div className="mt-6 rounded-lg border border-line bg-elevated p-4">
+      <div className="mt-6 rounded-2xl border border-line bg-elevated p-4">
         <div className="flex items-center justify-between">
           <div className="text-[13px] font-semibold text-fg">{t.recent}</div>
           <Link to="/app/history" className="text-[11px] text-accent">
@@ -190,7 +173,7 @@ function Dashboard() {
               (Date.now() - p.startedAt) / (p.durationDays * 86_400_000),
             );
             return (
-              <div key={p.id} className="rounded-lg border border-line bg-elevated p-4">
+              <div key={p.id} className="rounded-2xl border border-line bg-elevated p-4">
                 <div className="flex items-center justify-between">
                   <div className="text-xs font-bold tracking-widest">{p.name}</div>
                   <div className="text-[11px] text-accent">
@@ -232,7 +215,7 @@ function Stat({
   tone: string;
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-md border border-line bg-surface p-3">
+    <div className="flex items-center gap-3 min-w-0 rounded-2xl border border-line bg-surface p-3">
       <div className={`flex size-8 items-center justify-center rounded-full bg-line ${tone}`}>
         <Icon size={16} />
       </div>
