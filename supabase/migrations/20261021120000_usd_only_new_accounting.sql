@@ -52,41 +52,9 @@ begin
     if v_tx.type<>p_type or v_tx.amount<>p_amount
       or coalesce(v_tx.currency,'USD')<>'USD'
       or upper(coalesce(v_tx.method,''))<>v_method
-      or coalesce(v_tx.note,'')<>case when p_type='withdraw' then v_address else '' end
+      or coalesce(v_tx.note,'')<>case when p_type='withdraw' then v_address else '' end then
       raise exception 'Request ID was already used for a different transaction';
     end if;
-    return v_tx;
-  end if;
-
-  if p_type='withdraw' then
-    update public.user_profile
-       set available_balance=available_balance-p_amount, updated_at=now()
-     where user_id=v_uid and available_balance>=p_amount;
-    if not found then raise exception 'Insufficient USD balance'; end if;
-  end if;
-
-  insert into public.transaction(user_id,type,amount,currency,status,approval_status,method,note,request_id)
-  values(v_uid,p_type,p_amount,'USD','pending','awaiting',v_method,
-    case when p_type='withdraw' then v_address else null end,p_request_id)
-  returning * into v_tx;
-  return v_tx;
-exception when unique_violation then
-  select * into v_tx from public.transaction
-   where user_id=v_uid and request_id=p_request_id limit 1;
-  if found and v_tx.type=p_type and v_tx.amount=p_amount
-    and coalesce(v_tx.currency,'USD')='USD'
-    and upper(coalesce(v_tx.method,''))=v_method then return v_tx; end if;
-  raise;
-end;
-$function$;
-
-revoke all on function public.create_financial_transaction(text,numeric,text,text,uuid,text) from public, anon;
-grant execute on function public.create_financial_transaction(text,numeric,text,text,uuid,text) to authenticated;
-drop function if exists public.create_financial_transaction(text,numeric,text,text,uuid);
-drop function if exists public.create_financial_transaction(text,numeric,text,text);
-
-
-    then raise exception 'Request ID was already used for a different transaction'; end if;
     return v_tx;
   end if;
 
