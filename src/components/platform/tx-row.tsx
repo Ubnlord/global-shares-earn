@@ -43,7 +43,7 @@ export function TxRow({ tx }: { tx: Transaction }) {
       <div className="text-right">
         <div className={cn("text-[13px] font-semibold", amountTone)}>
           {sign}
-          {tx.currency === "BDX" ? `Archived amount: ${tx.amount.toLocaleString()}` : formatUsd(tx.amount)}
+          {tx.currency === "BDX" ? "Archived transaction" : formatUsd(tx.amount)}
         </div>
         <div
           className={cn(
