@@ -18,7 +18,7 @@ export function Header({ onMenu }: { onMenu?: () => void }) {
 
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/95 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
-      <div className="mx-auto flex h-14 max-w-[1200px] items-center justify-between gap-2 px-3 sm:h-16 sm:px-6">
+      <div className="mx-auto flex h-[76px] max-w-[1200px] items-center justify-between gap-2 px-3 sm:h-24 sm:px-6">
         <BrandLockup
           to={user ? "/app" : "/"}
           subtitle={t.tag}
@@ -28,7 +28,7 @@ export function Header({ onMenu }: { onMenu?: () => void }) {
             value={lang}
             onChange={(e) => setLang(e.target.value as Lang)}
             aria-label="Language"
-            className="h-9 rounded-full border border-line-strong bg-surface px-2 text-xs text-fg outline-none"
+            className="h-12 rounded-full border border-line-strong bg-surface px-3 text-sm text-fg outline-none sm:h-14 sm:px-5 sm:text-base"
           >
             {LANGS.map((item) => (
               <option key={item.id} value={item.id}>
@@ -40,7 +40,7 @@ export function Header({ onMenu }: { onMenu?: () => void }) {
             <>
               <Link
                 to="/app/notifications"
-                className="relative flex size-9 items-center justify-center rounded-full border border-line-strong bg-elevated text-muted"
+                className="relative flex size-12 items-center justify-center rounded-full border border-line-strong bg-elevated text-muted sm:size-14"
                 aria-label="Notifications"
               >
                 <Bell size={16} />
@@ -53,10 +53,10 @@ export function Header({ onMenu }: { onMenu?: () => void }) {
               <button
                 type="button"
                 onClick={onMenu}
-                className="flex size-9 items-center justify-center overflow-hidden rounded-full bg-accent text-xs font-bold text-accent-fg"
+                className="flex size-12 items-center justify-center overflow-hidden rounded-full bg-accent text-sm font-bold text-accent-fg sm:size-14"
                 aria-label="Open menu"
               >
-                <Avatar name={user.name} src={user.avatar} className="size-9 text-xs" />
+                <Avatar name={user.name} src={user.avatar} className="size-12 text-sm sm:size-14" />
               </button>
             </>
           ) : (
