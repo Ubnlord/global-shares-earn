@@ -21,7 +21,7 @@ export function BrandLockup({
   const lang = usePlatform((s) => s.lang);
   return (
     <Link to={to} className="flex min-w-0 items-center gap-2">
-      <img src={`${import.meta.env.BASE_URL}gse-header.jpg`} alt="Global Shares Earn" className="h-9 w-auto max-w-[min(48vw,220px)] object-contain" loading="eager" decoding="async" />
+      <img src={`${import.meta.env.BASE_URL}gse-logo.jpg`} alt="Global Shares Earn" className="h-11 w-auto max-w-[min(62vw,300px)] object-contain" loading="eager" decoding="async" />
       <span className="sr-only">GLOBAL SHARES EARN {subtitle ?? copy[lang].tag}</span>
     </Link>
   );
