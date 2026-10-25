@@ -34,6 +34,9 @@ function Landing() {
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 pb-20 sm:px-6">
+      <section aria-label="Global Shares Earn brand banner" className="mt-5 overflow-hidden rounded-2xl border border-line bg-[#071426] shadow-sm sm:mt-8">
+        <img src="/gse-banna.jpg" alt="Global Shares Earn investment platform banner" className="block max-h-[260px] w-full object-cover object-center sm:max-h-[340px]" fetchPriority="high" decoding="async" />
+      </section>
       <div className="mt-8 grid items-start gap-8 sm:mt-12 md:grid-cols-2">
         <div className="rise">
           <h1 className="text-balance text-[28px] font-extrabold leading-[1.05] tracking-tight sm:text-[52px] sm:leading-[0.95]">
