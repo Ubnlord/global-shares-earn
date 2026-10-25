@@ -3,17 +3,10 @@ import { copy } from "@/lib/platform/i18n";
 import { usePlatform } from "@/lib/platform/store";
 import { cn } from "@/lib/utils";
 
-
 export function Mark({ className }: { className?: string }) {
   return (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-lg border border-emerald-300/40 bg-gradient-to-br from-emerald-300 to-emerald-600 text-[11px] font-black tracking-tight text-[#062018] shadow-sm",
-        className,
-      )}
-    >
-      GS
+    <div className={cn("flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white/95 p-1 shadow-sm", className)}>
+      <img src="/gse-logo.jpg" alt="Global Shares Earn" className="h-full w-full object-contain" loading="eager" decoding="async" />
     </div>
   );
 }
