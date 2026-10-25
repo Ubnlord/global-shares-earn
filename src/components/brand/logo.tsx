@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export function Mark({ className }: { className?: string }) {
   return (
     <div className={cn("flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white/95 p-1 shadow-sm", className)}>
-      <img src="/gse-logo.jpg" alt="Global Shares Earn" className="h-full w-full object-contain" loading="eager" decoding="async" />
+      <img src={`${import.meta.env.BASE_URL}gse-logo.jpg`} alt="Global Shares Earn" className="h-full w-full object-contain" loading="eager" decoding="async" />
     </div>
   );
 }
