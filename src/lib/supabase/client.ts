@@ -11,6 +11,8 @@ if (!url || !key) {
 
 export const supabase = createClient(url, key, {
   auth: {
+    // Keep customer sessions separate from admin sessions on shared GitHub Pages origins.
+    storageKey: "gse-customer-auth",
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
